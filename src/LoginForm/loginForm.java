@@ -3,9 +3,14 @@ package LoginForm;
 import javax.swing.ImageIcon;
 import java.awt.Image; 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import tabelpegawai.formtabelpegawai;
 
 public class loginForm extends javax.swing.JFrame {
 
+    String password = "setdakotanpin";
+    String username = "bagianumum";
+    
     public loginForm() {
         initComponents();
 
@@ -51,12 +56,12 @@ public class loginForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         WELCOME = new javax.swing.JLabel();
         PASSWORD = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jusernamefield = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         lblGambar = new javax.swing.JLabel();
         lblGambarKedua = new javax.swing.JLabel();
         USERNAME = new javax.swing.JLabel();
+        jpasswordfield = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,15 +77,9 @@ public class loginForm extends javax.swing.JFrame {
         PASSWORD.setFont(new java.awt.Font("Microsoft YaHei", 1, 16)); // NOI18N
         PASSWORD.setText("PASSWORD");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jusernamefield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jusernamefieldActionPerformed(evt);
             }
         });
 
@@ -114,20 +113,19 @@ public class loginForm extends javax.swing.JFrame {
                             .addComponent(jLabel2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(197, 197, 197)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(PASSWORD)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(USERNAME)))
+                            .addComponent(jusernamefield, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                            .addComponent(USERNAME)
+                            .addComponent(jpasswordfield)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(242, 242, 242)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(282, 282, 282)
                         .addComponent(WELCOME)))
-                .addGap(107, 107, 107)
-                .addComponent(lblGambarKedua, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblGambarKedua, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,11 +143,11 @@ public class loginForm extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(USERNAME)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jusernamefield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
                 .addComponent(PASSWORD)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpasswordfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(262, 262, 262))
@@ -159,16 +157,19 @@ public class loginForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jusernamefieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jusernamefieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jusernamefieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+ // TODO add your handling code here:
+        if(jpasswordfield.getText().equals(password)&&jusernamefield.getText().equals(username)){
+            JOptionPane.showMessageDialog(null,"Password Anda Benar","Pesan",JOptionPane.INFORMATION_MESSAGE);
+            new formtabelpegawai().setVisible(true);
+            dispose();
+        }else{
+            JOptionPane.showMessageDialog(null,"Password Anda Salah","Pesan",JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -213,8 +214,8 @@ public class loginForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPasswordField jpasswordfield;
+    private javax.swing.JTextField jusernamefield;
     private javax.swing.JLabel lblGambar;
     private javax.swing.JLabel lblGambarKedua;
     // End of variables declaration//GEN-END:variables
