@@ -17,7 +17,7 @@ public class loginForm extends javax.swing.JFrame {
         
         String path2 = "/images/kantorwalikota.jpeg"; 
         int lebar2 = 1000; 
-        int tinggi2 = 800;
+        int tinggi2 = 801;
         
         tampilkanGambar(lblGambarKedua, path2, lebar2, tinggi2);
     } 
