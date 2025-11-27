@@ -25,7 +25,7 @@ public class loginForm extends javax.swing.JFrame {
         int tinggi2 = 801;
         
         tampilkanGambar(lblGambarKedua, path2, lebar2, tinggi2);
-    } 
+    }
     
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
         try {
