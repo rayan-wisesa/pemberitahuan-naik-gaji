@@ -9,11 +9,11 @@ public class formtabelpegawai extends javax.swing.JFrame {
    
     public formtabelpegawai() {
         initComponents();
-        String path1 = "/images/Lambang_Kota_Tanjungpinang.png";
-        int lebar1 = 80; 
-        int tinggi1 = 100; 
+        String pathLogo = "/images/Lambang_Kota_Tanjungpinang.png";
+        int lebarLogo = 80; 
+        int tinggiLogo = 100; 
         
-        tampilkanGambar(Logo_Tanjungpinang, path1, lebar1, tinggi1); 
+        tampilkanGambar(Logo_Tanjungpinang, pathLogo, lebarLogo, tinggiLogo); 
     }
     
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
