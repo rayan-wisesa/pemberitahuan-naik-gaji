@@ -1,18 +1,36 @@
 package tabelpegawai;
 import javax.swing.ImageIcon;
 import java.awt.Image; 
+import java.awt.event.ComponentEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.event.ComponentAdapter;
 
 public class formtambahdata extends javax.swing.JFrame {
 
     public formtambahdata() {
         initComponents();
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+    public void componentResized(ComponentEvent e) {
+        int frameWidth = getWidth();
+        int frameHeight = getHeight();
+
+        // Hitung ulang posisi komponen seperti di atas
+        // (copy ulang logika setBounds di sini)
+    }
+});
+        
+        jLabel1.setBounds(0, 0, getWidth(), getHeight());
+        
         String pathLogo = "/images/Lambang_Kota_Tanjungpinang.png";
         int lebarLogo = 100; 
         int tinggiLogo = 120; 
         
-        tampilkanGambar(Logo_Tanjungpinang, pathLogo, lebarLogo, tinggiLogo); 
+        tampilkanGambar(Logo_Tanjungpinang, pathLogo, lebarLogo, tinggiLogo);
+        this.setSize(1245, 690);   // sesuaikan dengan ukuran desain
+    this.setLocationRelativeTo(null); // agar muncul di tengah layar
+    this.setResizable(false);
     }
 
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
@@ -46,8 +64,8 @@ public class formtambahdata extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
-        jYearChooser1 = new com.toedter.calendar.JYearChooser();
+        jMonthChooser1 = new org.netbeans.modules.form.InvalidComponent();
+        jYearChooser1 = new org.netbeans.modules.form.InvalidComponent();
         jLabel8 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
@@ -221,10 +239,10 @@ public class formtambahdata extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private com.toedter.calendar.JMonthChooser jMonthChooser1;
+    private org.netbeans.modules.form.InvalidComponent jMonthChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private com.toedter.calendar.JYearChooser jYearChooser1;
+    private org.netbeans.modules.form.InvalidComponent jYearChooser1;
     // End of variables declaration//GEN-END:variables
 }

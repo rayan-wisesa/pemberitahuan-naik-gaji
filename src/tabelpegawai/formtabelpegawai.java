@@ -3,17 +3,36 @@ import javax.swing.ImageIcon;
 import java.awt.Image; 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 
 public class formtabelpegawai extends javax.swing.JFrame {
 
    
     public formtabelpegawai() {
         initComponents();
+        this.addComponentListener(new ComponentAdapter() {
+    @Override
+    public void componentResized(ComponentEvent e) {
+        int frameWidth = getWidth();
+        int frameHeight = getHeight();
+
+        // Hitung ulang posisi komponen seperti di atas
+        // (copy ulang logika setBounds di sini)
+    }
+});
+        
+        jLabel1.setBounds(0, 0, getWidth(), getHeight());
+        
         String pathLogo = "/images/Lambang_Kota_Tanjungpinang.png";
         int lebarLogo = 80; 
         int tinggiLogo = 100; 
         
         tampilkanGambar(Logo_Tanjungpinang, pathLogo, lebarLogo, tinggiLogo); 
+        this.setSize(1245, 690);   // sesuaikan dengan ukuran desain
+    this.setLocationRelativeTo(null); // agar muncul di tengah layar
+    this.setResizable(false);
     }
     
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
@@ -26,7 +45,9 @@ public class formtabelpegawai extends javax.swing.JFrame {
                 Image scaledImage = img.getScaledInstance(lebar, tinggi, Image.SCALE_SMOOTH);
                 ImageIcon finalIcon = new ImageIcon(scaledImage);
                 label.setIcon(finalIcon);
-                label.setText("");
+                jLabel1.setText("");
+                jLabel1.setBounds(0, 0, getWidth(), getHeight());
+                
             } else {
                 System.err.println("Gambar tidak ditemukan pada path: " + pathGambar);
             }
@@ -55,6 +76,11 @@ public class formtabelpegawai extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Nirmala UI", 0, 36)); // NOI18N
@@ -205,8 +231,12 @@ public class formtabelpegawai extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        new formtambahdata().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
