@@ -1,15 +1,51 @@
 package tabelpegawai;
+
 import javax.swing.ImageIcon;
 import java.awt.Image; 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-
+import tabelpegawai.koneksi;
+import java.sql.Connection;
+import javax.swing.table.DefaultTableModel;
 
 public class formtabelpegawai extends javax.swing.JFrame {
 
-   
+    private DefaultTableModel tabel_gaji;
+    private String SQL;
+    
+     public void tampilData() {
+
+    tabel_gaji = new DefaultTableModel();
+    tabel_gaji.addColumn("No");
+    tabel_gaji.addColumn("Nama");
+    tabel_gaji.addColumn("NIP");
+    tabel_gaji.addColumn("Jabatan");
+    tabel_gaji.addColumn("Unit Kerja");
+    tabel_gaji.addColumn("Bulan Kenaikan");
+    tabel_gajiform.setModel(tabel_gaji);
+    java.sql.Connection conn = new koneksi().connect();
+    try{
+        java.sql.Statement stmt = conn.createStatement();
+            SQL = "select * from kenaikan_gaji";
+            java.sql.ResultSet res = stmt.executeQuery(SQL);
+        while (res.next()) {
+            int no = 1;
+            tabel_gaji.addRow(new Object[]{
+                no++,
+                res.getString("nama"),
+                res.getString("nip_pegawai"),
+                res.getString("jabatan"),
+                res.getString("unit_kerja"),
+                res.getString("bulan_kenaikan")
+            });
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+     }
     public formtabelpegawai() {
         initComponents();
         this.addComponentListener(new ComponentAdapter() {
@@ -20,9 +56,11 @@ public class formtabelpegawai extends javax.swing.JFrame {
 
         // Hitung ulang posisi komponen seperti di atas
         // (copy ulang logika setBounds di sini)
-    }
-});
-        
+            }
+        });
+
+    
+       
         jLabel1.setBounds(0, 0, getWidth(), getHeight());
         
         String pathLogo = "/images/Lambang_Kota_Tanjungpinang.png";
@@ -57,7 +95,7 @@ public class formtabelpegawai extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -66,7 +104,7 @@ public class formtabelpegawai extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabel_gaji = new javax.swing.JTable();
+        tabel_gajiform = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -95,7 +133,7 @@ public class formtabelpegawai extends javax.swing.JFrame {
         jLabel4.setText("Data Kenaikan Gaji");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, -1, -1));
 
-        tabel_gaji.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_gajiform.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -182,7 +220,7 @@ public class formtabelpegawai extends javax.swing.JFrame {
                 "No.", "Nama", "NIP", "Jabatan", "Unit Kerja", "Bulan Kenaikan Gaji"
             }
         ));
-        jScrollPane1.setViewportView(tabel_gaji);
+        jScrollPane1.setViewportView(tabel_gajiform);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 930, 250));
 
@@ -235,7 +273,7 @@ public class formtabelpegawai extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
+        tampilData();
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -286,6 +324,6 @@ public class formtabelpegawai extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTable tabel_gaji;
+    private javax.swing.JTable tabel_gajiform;
     // End of variables declaration//GEN-END:variables
 }
