@@ -69,12 +69,10 @@
                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="comboboxjabatan" min="-2" pref="280" max="-2" attributes="0"/>
-                              <Component id="bulan" alignment="0" min="-2" pref="280" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="44" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="comboboxunitkerja" alignment="1" min="-2" pref="280" max="-2" attributes="0"/>
-                              <Component id="jYearChooser1" alignment="1" min="-2" pref="280" max="-2" attributes="0"/>
                               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -103,19 +101,12 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="comboboxjabatan" min="-2" pref="42" max="-2" attributes="0"/>
-                      <Component id="comboboxunitkerja" max="32767" attributes="0"/>
+                      <Component id="comboboxunitkerja" pref="52" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="bulan" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="jYearChooser1" min="-2" pref="40" max="-2" attributes="0"/>
-                  </Group>
+                  <EmptySpace pref="54" max="32767" attributes="0"/>
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -238,15 +229,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Bulan Kenaikan Gaji"/>
           </Properties>
-        </Component>
-        <Component class="com.toedter.calendar.JMonthChooser" name="bulan">
-          <Properties>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[280, 26]"/>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="com.toedter.calendar.JYearChooser" name="jYearChooser1">
         </Component>
       </SubComponents>
     </Container>

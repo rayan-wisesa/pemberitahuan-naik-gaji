@@ -7,6 +7,7 @@ import java.awt.event.*;
 import tabelpegawai.koneksi;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
+import tabelpegawai.formeditdata;
 
 public class formtabelpegawai extends javax.swing.JFrame {
     
@@ -230,6 +231,11 @@ public class formtabelpegawai extends javax.swing.JFrame {
                 "No.", "Nama", "NIP", "Jabatan", "Unit Kerja", "Bulan Kenaikan Gaji"
             }
         ));
+        tabel_gajiform.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_gajiformMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabel_gajiform);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 930, 250));
@@ -253,6 +259,11 @@ public class formtabelpegawai extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jButton2.setText("Edit Data");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 550, 130, -1));
 
         jButton3.setBackground(new java.awt.Color(51, 255, 51));
@@ -299,6 +310,27 @@ public class formtabelpegawai extends javax.swing.JFrame {
         tampilData(keyword);
 
     }//GEN-LAST:event_btncariActionPerformed
+
+
+    private void tabel_gajiformMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_gajiformMouseClicked
+
+    }//GEN-LAST:event_tabel_gajiformMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       
+        int row = tabel_gajiform.getSelectedRow();
+        if (row != -1) {
+            String nama = tabel_gajiform.getValueAt(row, 1).toString();
+            String nip = tabel_gajiform.getValueAt(row, 2).toString();
+            String jabatan = tabel_gajiform.getValueAt(row, 3).toString();
+            String unitKerja = tabel_gajiform.getValueAt(row, 4).toString();
+
+            // Open Form B and pass data
+               
+        formeditdata editForm = new formeditdata(nama, nip, jabatan, unitKerja);
+            editForm.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
