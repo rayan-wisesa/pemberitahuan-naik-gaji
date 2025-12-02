@@ -1,22 +1,21 @@
 package tabelpegawai;
 
 import javax.swing.ImageIcon;
-import java.awt.Image; 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
 import tabelpegawai.koneksi;
-import java.sql.Connection;
+import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 
 public class formtabelpegawai extends javax.swing.JFrame {
-
+    
+    private JTextField field_cari;
     private DefaultTableModel tabel_gaji;
     private String SQL;
     
-     public void tampilData() {
-
+     public void tampilData(String keyword) {
+         
     tabel_gaji = new DefaultTableModel();
     tabel_gaji.addColumn("No");
     tabel_gaji.addColumn("Nama");
@@ -27,25 +26,35 @@ public class formtabelpegawai extends javax.swing.JFrame {
     tabel_gajiform.setModel(tabel_gaji);
     java.sql.Connection conn = new koneksi().connect();
     try{
-        java.sql.Statement stmt = conn.createStatement();
-            SQL = "select * from kenaikan_gaji";
-            java.sql.ResultSet res = stmt.executeQuery(SQL);
-        while (res.next()) {
-            int no = 1;
-            tabel_gaji.addRow(new Object[]{
+        String sql;
+        PreparedStatement stmt;
+        if (keyword.isEmpty()) {
+                sql = "SELECT * FROM kenaikan_gaji";
+                stmt = conn.prepareStatement(sql);
+            } else {
+                sql = "SELECT * FROM kenaikan_gaji WHERE nama LIKE ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, "%" + keyword + "%");
+            }
+
+            ResultSet res = stmt.executeQuery();
+            while (res.next()) {
+                int no = 1;
+                tabel_gaji.addRow(new Object[]{
                 no++,
                 res.getString("nama"),
                 res.getString("nip_pegawai"),
                 res.getString("jabatan"),
                 res.getString("unit_kerja"),
                 res.getString("bulan_kenaikan")
-            });
+                });
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage());
         }
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
      }
+
     public formtabelpegawai() {
         initComponents();
         this.addComponentListener(new ComponentAdapter() {
@@ -105,10 +114,11 @@ public class formtabelpegawai extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel_gajiform = new javax.swing.JTable();
+        btncari = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        fieldcari = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         Logo_Tanjungpinang = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -224,6 +234,14 @@ public class formtabelpegawai extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 930, 250));
 
+        btncari.setText("Cari");
+        btncari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncariActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btncari, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 260, -1, 20));
+
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jButton1.setText("Tambah Data");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -242,12 +260,12 @@ public class formtabelpegawai extends javax.swing.JFrame {
         jButton3.setText("Riwayat Kenaikan Gaji");
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 550, -1, -1));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        fieldcari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                fieldcariActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 260, 160, -1));
+        getContentPane().add(fieldcari, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 260, 160, -1));
 
         jButton4.setBackground(new java.awt.Color(255, 0, 0));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -264,17 +282,23 @@ public class formtabelpegawai extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void fieldcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldcariActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_fieldcariActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new formtambahdata().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        tampilData();
+        tampilData("");
     }//GEN-LAST:event_formWindowOpened
+
+    private void btncariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncariActionPerformed
+        String keyword = fieldcari.getText().trim();
+        tampilData(keyword);
+
+    }//GEN-LAST:event_btncariActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,6 +338,8 @@ public class formtabelpegawai extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Logo_Tanjungpinang;
+    private javax.swing.JButton btncari;
+    private javax.swing.JTextField fieldcari;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -323,7 +349,6 @@ public class formtabelpegawai extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabel_gajiform;
     // End of variables declaration//GEN-END:variables
 }
