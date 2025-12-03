@@ -26,7 +26,7 @@ public Connection connect(){
     }
     return koneksi;
 }
-
+    
 public static void main(String[]args){
     java.sql.Connection conn = new koneksi().connect();
     }

@@ -26,6 +26,11 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JLabel" name="Logo_Tanjungpinang">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/Lambang_Kota_Tanjungpinang.png"/>
+        </Property>
+      </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="600" y="0" width="130" height="140"/>
@@ -53,8 +58,8 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="nip_field" max="32767" attributes="0"/>
                       <Component id="nama_pegawaifield" max="32767" attributes="0"/>
@@ -62,18 +67,22 @@
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="comboboxjabatan" min="-2" pref="280" max="-2" attributes="0"/>
+                              <Component id="jMonthChooser1" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="44" max="32767" attributes="0"/>
+                          <EmptySpace pref="38" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="comboboxunitkerja" alignment="1" min="-2" pref="280" max="-2" attributes="0"/>
-                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                              <Component id="jYearChooser1" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="comboboxunitkerja" alignment="1" min="-2" pref="280" max="-2" attributes="0"/>
+                                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -101,11 +110,16 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="comboboxjabatan" min="-2" pref="42" max="-2" attributes="0"/>
-                      <Component id="comboboxunitkerja" pref="52" max="32767" attributes="0"/>
+                      <Component id="comboboxunitkerja" pref="48" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="54" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jMonthChooser1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jYearChooser1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -230,6 +244,10 @@
             <Property name="text" type="java.lang.String" value="Bulan Kenaikan Gaji"/>
           </Properties>
         </Component>
+        <Component class="com.toedter.calendar.JMonthChooser" name="jMonthChooser1">
+        </Component>
+        <Component class="com.toedter.calendar.JYearChooser" name="jYearChooser1">
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JButton" name="jButton3">
@@ -247,7 +265,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1060" y="620" width="-1" height="-1"/>
+          <AbsoluteConstraints x="980" y="600" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
