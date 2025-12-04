@@ -281,6 +281,11 @@ public class formtabelpegawai extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(255, 0, 0));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jButton4.setText("Hapus");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 550, 130, -1));
 
         Logo_Tanjungpinang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Lambang_Kota_Tanjungpinang.png"))); // NOI18N
@@ -331,6 +336,23 @@ public class formtabelpegawai extends javax.swing.JFrame {
             editForm.setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    java.sql.Connection conn = new koneksi().connect();
+    int row = tabel_gajiform.getSelectedRow();
+    int ok = JOptionPane.showConfirmDialog(null,"Apakah yakin akan menghapus Data?","Konfirmasi",JOptionPane.YES_NO_OPTION);
+    if(ok==0){
+        try{
+            SQL="delete from kenaikan_gaji where nip_pegawai='"+tabel_gajiform.getValueAt(row, 2).toString()+"'";
+            java.sql.PreparedStatement stmt = conn.prepareStatement(SQL);
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Data Berhasil di Hapus");
+            tampilData("");
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,"Data Gagal Di Hapus");
+        }
+    }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
