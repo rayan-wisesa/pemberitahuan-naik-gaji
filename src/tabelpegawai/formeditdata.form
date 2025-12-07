@@ -66,19 +66,19 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="nama_pegawaifield" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboboxjabatan" min="-2" pref="280" max="-2" attributes="0"/>
-                              <Component id="jTextField1" alignment="0" min="-2" pref="280" max="-2" attributes="0"/>
+                              <Component id="comboboxjabatan" pref="280" max="32767" attributes="0"/>
+                              <Component id="combobulan" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="comboboxunitkerja" alignment="0" pref="280" max="32767" attributes="0"/>
                               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField2" max="32767" attributes="0"/>
+                              <Component id="combotahun" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="nip_field" alignment="0" max="32767" attributes="0"/>
@@ -117,8 +117,8 @@
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="combobulan" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="combotahun" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
@@ -229,10 +229,6 @@
             <Property name="text" type="java.lang.String" value="Bulan Kenaikan Gaji"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
-        </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -249,6 +245,43 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="combobulan">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="13">
+                <StringItem index="0" value="--Pilih Bulan--"/>
+                <StringItem index="1" value="Januari"/>
+                <StringItem index="2" value="Februari "/>
+                <StringItem index="3" value="Maret"/>
+                <StringItem index="4" value="April"/>
+                <StringItem index="5" value="Mei"/>
+                <StringItem index="6" value="Juni"/>
+                <StringItem index="7" value="Juli"/>
+                <StringItem index="8" value="Agustus"/>
+                <StringItem index="9" value="September"/>
+                <StringItem index="10" value="Oktober"/>
+                <StringItem index="11" value="November"/>
+                <StringItem index="12" value="Desember"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="combotahun">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection component="combotahun" name="getModel" type="method"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combotahunActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

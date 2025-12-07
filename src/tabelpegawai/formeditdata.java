@@ -9,6 +9,7 @@ import tabelpegawai.koneksi;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.time.LocalDate;
 
 public class formeditdata extends javax.swing.JFrame {
     
@@ -27,25 +28,37 @@ public class formeditdata extends javax.swing.JFrame {
     }
 });
         
-        jLabel1.setBounds(0, 0, getWidth(), getHeight());
+
+
+    
+    }
+    
+    public formeditdata(String nama, String nip, String jabatan, String unitKerja, String bulan, String tahun) {
+    initComponents();
+            int currentYear = java.time.Year.now().getValue();
+        for (int i = currentYear; i <= currentYear + 10; i++) {
+        combotahun.addItem(String.valueOf(i));
+    }
+        nama_pegawaifield.setText(nama);
+        nip_field.setText(nip);
+        comboboxjabatan.setSelectedItem(jabatan);
+        comboboxunitkerja.setSelectedItem(unitKerja);
+        combobulan.setSelectedItem(bulan);
+        combotahun.setSelectedItem(tahun);
+        this.setSize(1300, 750);   // sesuaikan dengan ukuran desain
+        this.setLocationRelativeTo(null); // agar muncul di tengah layar
+        this.setResizable(false);
+        
+                jLabel1.setBounds(0, 0, getWidth(), getHeight());
         
         String pathLogo = "/images/Lambang_Kota_Tanjungpinang.png";
         int lebarLogo = 100; 
         int tinggiLogo = 120; 
         
         tampilkanGambar(Logo_Tanjungpinang, pathLogo, lebarLogo, tinggiLogo);
-    }
-    
-    public formeditdata(String nama, String nip, String jabatan, String unitKerja) {
-        initComponents();
-        nama_pegawaifield.setText(nama);
-        nip_field.setText(nip);
-        comboboxjabatan.setSelectedItem(jabatan);
-        comboboxunitkerja.setSelectedItem(unitKerja);
-        this.setSize(1300, 750);   // sesuaikan dengan ukuran desain
-        this.setLocationRelativeTo(null); // agar muncul di tengah layar
-        this.setResizable(false);
-    }
+
+}
+
 
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
         try {
@@ -83,9 +96,9 @@ public class formeditdata extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         comboboxunitkerja = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        combobulan = new javax.swing.JComboBox<>();
+        combotahun = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -144,6 +157,15 @@ public class formeditdata extends javax.swing.JFrame {
             }
         });
 
+        combobulan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Pilih Bulan--", "Januari", "Februari ", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
+
+        combotahun.setModel(combotahun.getModel());
+        combotahun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                combotahunActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -156,18 +178,18 @@ public class formeditdata extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nama_pegawaifield)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
-                            .addComponent(comboboxjabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboboxjabatan, 0, 280, Short.MAX_VALUE)
+                            .addComponent(combobulan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(comboboxunitkerja, 0, 280, Short.MAX_VALUE)
                             .addComponent(jLabel9)
-                            .addComponent(jTextField2)))
+                            .addComponent(combotahun, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(nip_field)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
@@ -198,8 +220,8 @@ public class formeditdata extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(combobulan, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combotahun, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addGap(54, 54, 54))
@@ -244,20 +266,47 @@ public class formeditdata extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        /*
-        JMonthChooser bulan = new JMonthChooser();
-        JYearChooser tahun = new JYearChooser();
-        */
+        
+    int tanggal = 1;
+    String bulanStr = combobulan.getSelectedItem().toString();
+
+    if (bulanStr.equals("--Pilih Bulan--")) {
+        JOptionPane.showMessageDialog(null, "Silakan pilih bulan terlebih dahulu!");
+        return; // hentikan proses insert
+    }
+
+
+    int bulan = 0;
+    switch (bulanStr) {
+    case "Januari": bulan = 1; break;
+    case "Februari": bulan = 2; break;
+    case "Maret": bulan = 3; break;
+    case "April": bulan = 4; break;
+    case "Mei": bulan= 5; break;
+    case "Juni": bulan = 6; break;
+    case "Juli": bulan = 7; break;
+    case "Agustus": bulan = 8; break;
+    case "September": bulan = 9; break;
+    case "Oktober": bulan = 10; break;
+    case "November": bulan = 11; break;
+    case "Desember": bulan = 12; break;
+    }
+    
+    int tahun = Integer.parseInt(combotahun.getSelectedItem().toString());
+
+    // gabungkan jadi LocalDate
+    LocalDate date = LocalDate.of(tahun, bulan, tanggal);
+
         java.sql.Connection conn = new koneksi().connect();
     try{
-            java.sql.PreparedStatement stmt = conn.prepareStatement("insert into kenaikan_gaji (nama, nip_pegawai, jabatan, unit_kerja)values (?,?,?,?)");
+            java.sql.PreparedStatement stmt = conn.prepareStatement("UPDATE kenaikan_gaji SET nama=?, nip_pegawai=?, jabatan=?, unit_kerja=?, bulan_kenaikan=? WHERE nip_pegawai=?");
             try{
                 stmt.setString(1, nama_pegawaifield.getText());
                 stmt.setString(2, nip_field.getText());
                 stmt.setString(3, comboboxjabatan.getSelectedItem().toString());
                 stmt.setString(4, comboboxunitkerja.getSelectedItem().toString());
-                /*stmt.setInt(5, bulan.getMonth());
-                stmt.setInt(6, tahun.getYear()); */
+                stmt.setDate(5, java.sql.Date.valueOf(date));
+                stmt.setString(6, nip_field.getText()); // nip lama atau nip yang jadi kunci
                 stmt.executeUpdate();
                 JOptionPane.showMessageDialog(null,"Data Berhasil di Simpan","Pesan",JOptionPane.INFORMATION_MESSAGE);
                 new formtabelpegawai().setVisible(true);
@@ -269,6 +318,10 @@ public class formeditdata extends javax.swing.JFrame {
 
     }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void combotahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combotahunActionPerformed
+
+    }//GEN-LAST:event_combotahunActionPerformed
 
     /**
      * @param args the command line arguments
@@ -310,6 +363,8 @@ public class formeditdata extends javax.swing.JFrame {
     private javax.swing.JLabel Logo_Tanjungpinang;
     private javax.swing.JComboBox<String> comboboxjabatan;
     private javax.swing.JComboBox<String> comboboxunitkerja;
+    private javax.swing.JComboBox<String> combobulan;
+    private javax.swing.JComboBox<String> combotahun;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -323,8 +378,6 @@ public class formeditdata extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField nama_pegawaifield;
     private javax.swing.JTextField nip_field;
     // End of variables declaration//GEN-END:variables

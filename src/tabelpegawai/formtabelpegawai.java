@@ -8,6 +8,7 @@ import tabelpegawai.koneksi;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import tabelpegawai.formeditdata;
+import java.time.LocalDate;
 
 public class formtabelpegawai extends javax.swing.JFrame {
     
@@ -322,19 +323,43 @@ public class formtabelpegawai extends javax.swing.JFrame {
     }//GEN-LAST:event_tabel_gajiformMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
-        int row = tabel_gajiform.getSelectedRow();
-        if (row != -1) {
-            String nama = tabel_gajiform.getValueAt(row, 1).toString();
-            String nip = tabel_gajiform.getValueAt(row, 2).toString();
-            String jabatan = tabel_gajiform.getValueAt(row, 3).toString();
-            String unitKerja = tabel_gajiform.getValueAt(row, 4).toString();
+int row = tabel_gajiform.getSelectedRow();
+if (row != -1) {
+    String nama = tabel_gajiform.getValueAt(row, 1).toString();
+    String nip = tabel_gajiform.getValueAt(row, 2).toString();
+    String jabatan = tabel_gajiform.getValueAt(row, 3).toString();
+    String unitKerja = tabel_gajiform.getValueAt(row, 4).toString();
 
-            // Open Form B and pass data
-               
-        formeditdata editForm = new formeditdata(nama, nip, jabatan, unitKerja);
-            editForm.setVisible(true);
-        }
+    // ambil kolom bulan_kenaikan (format DATE dari database)
+    String tanggalStr = tabel_gajiform.getValueAt(row, 5).toString(); // contoh: "2025-12-01"
+
+    // parsing ke LocalDate
+    LocalDate date = LocalDate.parse(tanggalStr); 
+    int bulan = date.getMonthValue(); // 1–12
+    int tahun = date.getYear();
+
+    // konversi angka bulan ke nama bulan
+    String bulanStr = "";
+    switch (bulan) {
+        case 1: bulanStr = "Januari"; break;
+        case 2: bulanStr = "Februari"; break;
+        case 3: bulanStr = "Maret"; break;
+        case 4: bulanStr = "April"; break;
+        case 5: bulanStr = "Mei"; break;
+        case 6: bulanStr = "Juni"; break;
+        case 7: bulanStr = "Juli"; break;
+        case 8: bulanStr = "Agustus"; break;
+        case 9: bulanStr = "September"; break;
+        case 10: bulanStr = "Oktober"; break;
+        case 11: bulanStr = "November"; break;
+        case 12: bulanStr = "Desember"; break;
+    }
+
+    // kirim ke form edit
+    formeditdata editForm = new formeditdata(nama, nip, jabatan, unitKerja, bulanStr, String.valueOf(tahun));
+    editForm.setVisible(true);
+}
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
