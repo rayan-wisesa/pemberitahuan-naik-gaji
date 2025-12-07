@@ -9,6 +9,9 @@ import tabelpegawai.koneksi;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.time.LocalDate;
+import java.sql.Date;
+
 
 public class formtambahdata extends javax.swing.JFrame {
 
@@ -40,7 +43,7 @@ public class formtambahdata extends javax.swing.JFrame {
     
     int currentYear = java.time.Year.now().getValue();
     for (int i = currentYear; i <= currentYear + 10; i++) {
-        comboboxtahun.addItem(String.valueOf(i));
+        combotahun.addItem(String.valueOf(i));
     }
 
     }
@@ -82,8 +85,8 @@ public class formtambahdata extends javax.swing.JFrame {
         comboboxunitkerja = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        comboboxtahun = new javax.swing.JComboBox<>();
+        combobulan = new javax.swing.JComboBox<>();
+        combotahun = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -142,12 +145,12 @@ public class formtambahdata extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("Bulan Kenaikan Gaji");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Pilih Salah Satu--", "Januari", "Februari ", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
+        combobulan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Pilih Bulan--", "Januari", "Februari ", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
 
-        comboboxtahun.setModel(comboboxtahun.getModel());
-        comboboxtahun.addActionListener(new java.awt.event.ActionListener() {
+        combotahun.setModel(combotahun.getModel());
+        combotahun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboboxtahunActionPerformed(evt);
+                combotahunActionPerformed(evt);
             }
         });
 
@@ -163,7 +166,7 @@ public class formtambahdata extends javax.swing.JFrame {
                     .addComponent(nama_pegawaifield)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(combobulan, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +177,7 @@ public class formtambahdata extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(comboboxunitkerja, 0, 280, Short.MAX_VALUE)
                             .addComponent(jLabel9)
-                            .addComponent(comboboxtahun, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(combotahun, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -193,19 +196,17 @@ public class formtambahdata extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(comboboxjabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(comboboxunitkerja))
+                    .addComponent(comboboxjabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboboxunitkerja, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboboxtahun, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(combobulan, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combotahun, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
 
@@ -248,20 +249,46 @@ public class formtambahdata extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        /*
-        JMonthChooser bulan = new JMonthChooser();
-        JYearChooser tahun = new JYearChooser();
-        */
+        
+    int tanggal = 1;
+    String bulanStr = combobulan.getSelectedItem().toString();
+
+    if (bulanStr.equals("--Pilih Bulan--")) {
+        JOptionPane.showMessageDialog(null, "Silakan pilih bulan terlebih dahulu!");
+        return; // hentikan proses insert
+    }
+
+
+    int bulan = 0;
+    switch (bulanStr) {
+    case "Januari": bulan = 1; break;
+    case "Februari": bulan = 2; break;
+    case "Maret": bulan = 3; break;
+    case "April": bulan = 4; break;
+    case "Mei": bulan= 5; break;
+    case "Juni": bulan = 6; break;
+    case "Juli": bulan = 7; break;
+    case "Agustus": bulan = 8; break;
+    case "September": bulan = 9; break;
+    case "Oktober": bulan = 10; break;
+    case "November": bulan = 11; break;
+    case "Desember": bulan = 12; break;
+    }
+    
+    int tahun = Integer.parseInt(combotahun.getSelectedItem().toString());
+
+    // gabungkan jadi LocalDate
+    LocalDate date = LocalDate.of(tahun, bulan, tanggal);
+
         java.sql.Connection conn = new koneksi().connect();
     try{
-            java.sql.PreparedStatement stmt = conn.prepareStatement("insert into kenaikan_gaji (nama, nip_pegawai, jabatan, unit_kerja)values (?,?,?,?)");
+            java.sql.PreparedStatement stmt = conn.prepareStatement("insert into kenaikan_gaji (nama, nip_pegawai, jabatan, unit_kerja, bulan_kenaikan )values (?,?,?,?,?)");
             try{
                 stmt.setString(1, nama_pegawaifield.getText());
                 stmt.setString(2, nip_field.getText());
                 stmt.setString(3, comboboxjabatan.getSelectedItem().toString());
                 stmt.setString(4, comboboxunitkerja.getSelectedItem().toString());
-                /*stmt.setInt(5, bulan.getMonth());
-                stmt.setInt(6, tahun.getYear()); */
+                stmt.setDate(5, java.sql.Date.valueOf(date));
                 stmt.executeUpdate();
                 JOptionPane.showMessageDialog(null,"Data Berhasil di Simpan","Pesan",JOptionPane.INFORMATION_MESSAGE);
                 new formtabelpegawai().setVisible(true);
@@ -274,9 +301,9 @@ public class formtambahdata extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void comboboxtahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxtahunActionPerformed
+    private void combotahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combotahunActionPerformed
 
-    }//GEN-LAST:event_comboboxtahunActionPerformed
+    }//GEN-LAST:event_combotahunActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,11 +343,11 @@ public class formtambahdata extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Logo_Tanjungpinang;
     private javax.swing.JComboBox<String> comboboxjabatan;
-    private javax.swing.JComboBox<String> comboboxtahun;
     private javax.swing.JComboBox<String> comboboxunitkerja;
+    private javax.swing.JComboBox<String> combobulan;
+    private javax.swing.JComboBox<String> combotahun;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
