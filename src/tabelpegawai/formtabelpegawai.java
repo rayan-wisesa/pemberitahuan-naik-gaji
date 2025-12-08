@@ -145,6 +145,7 @@ public class formtabelpegawai extends javax.swing.JFrame {
         jLabel4.setText("Data Kenaikan Gaji");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, -1, -1));
 
+        tabel_gajiform.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tabel_gajiform.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -241,15 +242,16 @@ public class formtabelpegawai extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 930, 250));
 
+        btncari.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btncari.setText("Cari");
         btncari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btncariActionPerformed(evt);
             }
         });
-        getContentPane().add(btncari, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 260, -1, 20));
+        getContentPane().add(btncari, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 260, -1, 30));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setText("Tambah Data");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -258,7 +260,7 @@ public class formtabelpegawai extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 550, -1, -1));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("Edit Data");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -268,19 +270,20 @@ public class formtabelpegawai extends javax.swing.JFrame {
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 550, 130, -1));
 
         jButton3.setBackground(new java.awt.Color(51, 255, 51));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton3.setText("Riwayat Kenaikan Gaji");
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 550, -1, -1));
 
+        fieldcari.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         fieldcari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldcariActionPerformed(evt);
             }
         });
-        getContentPane().add(fieldcari, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 260, 160, -1));
+        getContentPane().add(fieldcari, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 260, 160, -1));
 
         jButton4.setBackground(new java.awt.Color(255, 0, 0));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton4.setText("Hapus");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
