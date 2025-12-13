@@ -33,7 +33,7 @@ public class formeditdata extends javax.swing.JFrame {
     
     }
     
-    public formeditdata(String nama, String nip, String jabatan, String unitKerja, String bulan, String tahun) {
+    public formeditdata(String nama, String nip, String pangkat, String jabatan, String bulan, String tahun) {
     initComponents();
             int currentYear = java.time.Year.now().getValue();
         for (int i = currentYear; i <= currentYear + 10; i++) {
@@ -41,8 +41,8 @@ public class formeditdata extends javax.swing.JFrame {
     }
         nama_pegawaifield.setText(nama);
         nip_field.setText(nip);
-        comboboxjabatan.setSelectedItem(jabatan);
-        comboboxunitkerja.setSelectedItem(unitKerja);
+        comboboxpangkat.setSelectedItem(pangkat);
+        jabatan_field.setText(jabatan);
         combobulan.setSelectedItem(bulan);
         combotahun.setSelectedItem(tahun);
         this.setSize(1300, 750);   // sesuaikan dengan ukuran desain
@@ -92,13 +92,13 @@ public class formeditdata extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         nip_field = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        comboboxjabatan = new javax.swing.JComboBox<>();
+        comboboxpangkat = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        comboboxunitkerja = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         combobulan = new javax.swing.JComboBox<>();
         combotahun = new javax.swing.JComboBox<>();
+        jabatan_field = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -128,21 +128,18 @@ public class formeditdata extends javax.swing.JFrame {
         nip_field.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel8.setText("Jabatan");
+        jLabel8.setText("Pangkat");
 
-        comboboxjabatan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        comboboxjabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboboxjabatan.addActionListener(new java.awt.event.ActionListener() {
+        comboboxpangkat.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        comboboxpangkat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboboxpangkat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboboxjabatanActionPerformed(evt);
+                comboboxpangkatActionPerformed(evt);
             }
         });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel9.setText("Unit Kerja");
-
-        comboboxunitkerja.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        comboboxunitkerja.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unit Kerja", "Item 2", "Item 3", "Item 4" }));
+        jLabel9.setText("Jabatan");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("Bulan Kenaikan Gaji");
@@ -185,13 +182,13 @@ public class formeditdata extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
-                            .addComponent(comboboxjabatan, 0, 280, Short.MAX_VALUE)
+                            .addComponent(comboboxpangkat, 0, 280, Short.MAX_VALUE)
                             .addComponent(combobulan, 0, 280, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(comboboxunitkerja, 0, 280, Short.MAX_VALUE)
                             .addComponent(jLabel9)
-                            .addComponent(combotahun, 0, 280, Short.MAX_VALUE)))
+                            .addComponent(combotahun, 0, 280, Short.MAX_VALUE)
+                            .addComponent(jabatan_field)))
                     .addComponent(nip_field)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
@@ -215,10 +212,10 @@ public class formeditdata extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboboxjabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboboxunitkerja))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboboxpangkat, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jabatan_field, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,9 +255,9 @@ public class formeditdata extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboboxjabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxjabatanActionPerformed
+    private void comboboxpangkatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxpangkatActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_comboboxjabatanActionPerformed
+    }//GEN-LAST:event_comboboxpangkatActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     new formtabelpegawai().setVisible(true);
@@ -301,12 +298,12 @@ public class formeditdata extends javax.swing.JFrame {
 
         java.sql.Connection conn = new koneksi().connect();
     try{
-            java.sql.PreparedStatement stmt = conn.prepareStatement("UPDATE kenaikan_gaji SET nama=?, nip_pegawai=?, jabatan=?, unit_kerja=?, bulan_kenaikan=? WHERE nip_pegawai=?");
+            java.sql.PreparedStatement stmt = conn.prepareStatement("UPDATE kenaikan_gaji SET nama=?, nip_pegawai=?, pangkat=?, jabatan=?, bulan_kenaikan=? WHERE nip_pegawai=?");
             try{
                 stmt.setString(1, nama_pegawaifield.getText());
                 stmt.setString(2, nip_field.getText());
-                stmt.setString(3, comboboxjabatan.getSelectedItem().toString());
-                stmt.setString(4, comboboxunitkerja.getSelectedItem().toString());
+                stmt.setString(3, comboboxpangkat.getSelectedItem().toString());
+                stmt.setString(4, jabatan_field.getText().toString());
                 stmt.setDate(5, java.sql.Date.valueOf(date));
                 stmt.setString(6, nip_field.getText()); // nip lama atau nip yang jadi kunci
                 stmt.executeUpdate();
@@ -363,8 +360,7 @@ public class formeditdata extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Logo_Tanjungpinang;
-    private javax.swing.JComboBox<String> comboboxjabatan;
-    private javax.swing.JComboBox<String> comboboxunitkerja;
+    private javax.swing.JComboBox<String> comboboxpangkat;
     private javax.swing.JComboBox<String> combobulan;
     private javax.swing.JComboBox<String> combotahun;
     private javax.swing.JButton jButton1;
@@ -380,6 +376,7 @@ public class formeditdata extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jabatan_field;
     private javax.swing.JTextField nama_pegawaifield;
     private javax.swing.JTextField nip_field;
     // End of variables declaration//GEN-END:variables

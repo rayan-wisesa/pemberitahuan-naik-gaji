@@ -22,8 +22,8 @@ public class formtabelpegawai extends javax.swing.JFrame {
     tabel_gaji.addColumn("No");
     tabel_gaji.addColumn("Nama");
     tabel_gaji.addColumn("NIP");
+    tabel_gaji.addColumn("Pangkat");
     tabel_gaji.addColumn("Jabatan");
-    tabel_gaji.addColumn("Unit Kerja");
     tabel_gaji.addColumn("Bulan Kenaikan");
     tabel_gajiform.setModel(tabel_gaji);
     java.sql.Connection conn = new koneksi().connect();
@@ -46,8 +46,8 @@ public class formtabelpegawai extends javax.swing.JFrame {
                 no++,
                 res.getString("nama"),
                 res.getString("nip_pegawai"),
+                res.getString("pangkat"),
                 res.getString("jabatan"),
-                res.getString("unit_kerja"),
                 res.getString("bulan_kenaikan")
                 });
             }
@@ -330,8 +330,8 @@ int row = tabel_gajiform.getSelectedRow();
 if (row != -1) {
     String nama = tabel_gajiform.getValueAt(row, 1).toString();
     String nip = tabel_gajiform.getValueAt(row, 2).toString();
-    String jabatan = tabel_gajiform.getValueAt(row, 3).toString();
-    String unitKerja = tabel_gajiform.getValueAt(row, 4).toString();
+    String pangkat = tabel_gajiform.getValueAt(row, 3).toString();
+    String jabatan = tabel_gajiform.getValueAt(row, 4).toString();
 
     // ambil kolom bulan_kenaikan (format DATE dari database)
     String tanggalStr = tabel_gajiform.getValueAt(row, 5).toString(); // contoh: "2025-12-01"
@@ -359,7 +359,7 @@ if (row != -1) {
     }
 
     // kirim ke form edit
-    formeditdata editForm = new formeditdata(nama, nip, jabatan, unitKerja, bulanStr, String.valueOf(tahun));
+    formeditdata editForm = new formeditdata(nama, nip, pangkat, jabatan, bulanStr, String.valueOf(tahun));
     editForm.setVisible(true);
 }
 
