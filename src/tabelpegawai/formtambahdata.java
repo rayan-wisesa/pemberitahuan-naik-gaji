@@ -119,7 +119,7 @@ public class formtambahdata extends javax.swing.JFrame {
         jLabel8.setText("Pangkat");
 
         comboboxpangkat.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        comboboxpangkat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jabatan", "Item 2", "Item 3", "Item 4" }));
+        comboboxpangkat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Pilih Pangkat--" }));
         comboboxpangkat.setMinimumSize(new java.awt.Dimension(111, 28));
         comboboxpangkat.setPreferredSize(new java.awt.Dimension(111, 28));
         comboboxpangkat.addActionListener(new java.awt.event.ActionListener() {
@@ -253,12 +253,17 @@ public class formtambahdata extends javax.swing.JFrame {
         
     int tanggal = 1;
     String bulanStr = combobulan.getSelectedItem().toString();
-
+    String pangkatStr = comboboxpangkat.getSelectedItem().toString();
+    
     if (bulanStr.equals("--Pilih Bulan--")) {
         JOptionPane.showMessageDialog(null, "Silakan pilih bulan terlebih dahulu!");
         return; // hentikan proses insert
     }
-
+    
+    if (pangkatStr.equals("--Pilih Pangkat--")) {
+        JOptionPane.showMessageDialog(null, "Silakan pilih pangkat terlebih dahulu!");
+        return; // hentikan proses insert
+    }
 
     int bulan = 0;
     switch (bulanStr) {
