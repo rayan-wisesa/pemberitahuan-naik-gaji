@@ -40,8 +40,8 @@ public class formtabelpegawai extends javax.swing.JFrame {
             }
 
             ResultSet res = stmt.executeQuery();
+            int no = 1;
             while (res.next()) {
-                int no = 1;
                 tabel_gaji.addRow(new Object[]{
                 no++,
                 res.getString("nama"),
