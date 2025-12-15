@@ -9,6 +9,9 @@ import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import tabelpegawai.formeditdata;
 import java.time.LocalDate;
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowFilter;
+
 
 public class formtabelpegawai extends javax.swing.JFrame {
     
@@ -26,6 +29,10 @@ public class formtabelpegawai extends javax.swing.JFrame {
     tabel_gaji.addColumn("Jabatan");
     tabel_gaji.addColumn("Bulan Kenaikan");
     tabel_gajiform.setModel(tabel_gaji);
+    
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tabel_gaji);
+    tabel_gajiform.setRowSorter(sorter);
+
     java.sql.Connection conn = new koneksi().connect();
     try{
         String sql;
