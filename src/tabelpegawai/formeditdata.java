@@ -131,7 +131,7 @@ public class formeditdata extends javax.swing.JFrame {
         jLabel8.setText("Pangkat");
 
         comboboxpangkat.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        comboboxpangkat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Pilih Pangkat--" }));
+        comboboxpangkat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Pilih Pangkat--", "Pembina Utama Muda / IVc", "Pembina Tk.I / IVb", "Pembina / IVa", "Penata Tk.I / IIId", "Penata / IIIc", "Penata Muda Tk. I / IIIb", "Penata Muda / IIIa", "Pengatur Tk. I / IId", "Pengatur / IIc", "IX", "VII", "V" }));
         comboboxpangkat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboboxpangkatActionPerformed(evt);

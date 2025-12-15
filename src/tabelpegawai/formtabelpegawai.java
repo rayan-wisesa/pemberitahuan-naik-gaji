@@ -126,7 +126,6 @@ public class formtabelpegawai extends javax.swing.JFrame {
         btncari = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         fieldcari = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         Logo_Tanjungpinang = new javax.swing.JLabel();
@@ -274,12 +273,7 @@ public class formtabelpegawai extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 550, 130, -1));
-
-        jButton3.setBackground(new java.awt.Color(51, 255, 51));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton3.setText("Riwayat Kenaikan Gaji");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 550, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 550, 130, -1));
 
         fieldcari.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         fieldcari.addActionListener(new java.awt.event.ActionListener() {
@@ -431,7 +425,6 @@ if (row != -1) {
     private javax.swing.JTextField fieldcari;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

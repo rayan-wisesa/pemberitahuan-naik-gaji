@@ -174,8 +174,20 @@
               <Font name="Tahoma" size="18" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="1">
+              <StringArray count="13">
                 <StringItem index="0" value="--Pilih Pangkat--"/>
+                <StringItem index="1" value="Pembina Utama Muda / IVc"/>
+                <StringItem index="2" value="Pembina Tk.I / IVb"/>
+                <StringItem index="3" value="Pembina / IVa"/>
+                <StringItem index="4" value="Penata Tk.I / IIId"/>
+                <StringItem index="5" value="Penata / IIIc"/>
+                <StringItem index="6" value="Penata Muda Tk. I / IIIb"/>
+                <StringItem index="7" value="Penata Muda / IIIa"/>
+                <StringItem index="8" value="Pengatur Tk. I / IId"/>
+                <StringItem index="9" value="Pengatur / IIc"/>
+                <StringItem index="10" value="IX"/>
+                <StringItem index="11" value="VII"/>
+                <StringItem index="12" value="V"/>
               </StringArray>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
