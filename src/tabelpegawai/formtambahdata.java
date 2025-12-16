@@ -1,5 +1,5 @@
 package tabelpegawai;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.awt.Image; 
 import java.awt.event.ComponentEvent;
 import javax.swing.JLabel;
@@ -11,7 +11,9 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.sql.Date;
-
+import java.sql.ResultSet;
+import java.util.Map;
+import java.util.HashMap;
 
 public class formtambahdata extends javax.swing.JFrame {
 
@@ -19,6 +21,7 @@ public class formtambahdata extends javax.swing.JFrame {
     
     public formtambahdata() {
         initComponents();
+        loadPangkatComboBox();
     
     // Placeholder
     nama_pegawaifield.putClientProperty(
@@ -85,6 +88,32 @@ private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
         "FlatLaf.style",
         "arc:18; font:bold"
     );
+}
+
+private Map<String, Integer> pangkatMap = new HashMap<>();
+    
+
+private void loadPangkatComboBox() {
+    try {
+        Connection conn = new koneksi().connect();
+        PreparedStatement stmt = conn.prepareStatement("SELECT id_pangkat, pangkat FROM pangkat ORDER BY pangkat");
+        ResultSet rs = stmt.executeQuery();
+
+        comboboxpangkat.removeAllItems();
+        comboboxpangkat.addItem("--Pilih Pangkat--");
+
+        pangkatMap.clear(); // kosongkan map
+
+        while (rs.next()) {
+            int idPangkat = rs.getInt("id_pangkat");
+            String namaPangkat = rs.getString("pangkat");
+
+            comboboxpangkat.addItem(namaPangkat);   // tampilkan hanya nama
+            pangkatMap.put(namaPangkat, idPangkat); // simpan mapping nama → id
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Gagal load data pangkat: " + ex.getMessage());
+    }
 }
 
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
@@ -289,67 +318,103 @@ private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+                                       
+
     int tanggal = 1;
     String bulanStr = combobulan.getSelectedItem().toString();
-    String pangkatStr = comboboxpangkat.getSelectedItem().toString();
-    
+
     if (bulanStr.equals("--Pilih Bulan--")) {
         JOptionPane.showMessageDialog(null, "Silakan pilih bulan terlebih dahulu!");
         return; // hentikan proses insert
     }
-    
-    if (pangkatStr.equals("--Pilih Pangkat--")) {
-        JOptionPane.showMessageDialog(null, "Silakan pilih pangkat terlebih dahulu!");
-        return; // hentikan proses insert
-    }
+
+    String pangkatStr = comboboxpangkat.getSelectedItem().toString();
+if (pangkatStr.equals("--Pilih Pangkat--")) {
+    JOptionPane.showMessageDialog(this, "Silakan pilih pangkat terlebih dahulu!");
+    return;
+}
+int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
 
     int bulan = 0;
     switch (bulanStr) {
-    case "Januari": bulan = 1; break;
-    case "Februari": bulan = 2; break;
-    case "Maret": bulan = 3; break;
-    case "April": bulan = 4; break;
-    case "Mei": bulan= 5; break;
-    case "Juni": bulan = 6; break;
-    case "Juli": bulan = 7; break;
-    case "Agustus": bulan = 8; break;
-    case "September": bulan = 9; break;
-    case "Oktober": bulan = 10; break;
-    case "November": bulan = 11; break;
-    case "Desember": bulan = 12; break;
+        case "Januari": bulan = 1; break;
+        case "Februari": bulan = 2; break;
+        case "Maret": bulan = 3; break;
+        case "April": bulan = 4; break;
+        case "Mei": bulan = 5; break;
+        case "Juni": bulan = 6; break;
+        case "Juli": bulan = 7; break;
+        case "Agustus": bulan = 8; break;
+        case "September": bulan = 9; break;
+        case "Oktober": bulan = 10; break;
+        case "November": bulan = 11; break;
+        case "Desember": bulan = 12; break;
     }
-    
+
     int tahun = Integer.parseInt(combotahun.getSelectedItem().toString());
 
     // gabungkan jadi LocalDate
     LocalDate date = LocalDate.of(tahun, bulan, tanggal);
 
-        java.sql.Connection conn = new koneksi().connect();
-    try{
-            java.sql.PreparedStatement stmt = conn.prepareStatement("insert into kenaikan_gaji (nama, nip_pegawai, pangkat, jabatan, bulan_kenaikan )values (?,?,?,?,?)");
-            try{
-                stmt.setString(1, nama_pegawaifield.getText());
-                stmt.setString(2, nip_field.getText());
-                stmt.setString(3, comboboxpangkat.getSelectedItem().toString());
-                stmt.setString(4, jabatan_field.getText());
-                stmt.setDate(5, java.sql.Date.valueOf(date));
-                stmt.executeUpdate();
-                JOptionPane.showMessageDialog(null,"Data Berhasil di Simpan","Pesan",JOptionPane.INFORMATION_MESSAGE);
-                new formtabelpegawai().setVisible(true);
-            dispose();
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null,"Data Gagal di Simpan","Pesan",JOptionPane.INFORMATION_MESSAGE);
-            }
-    }catch(Exception e){
+    try {
+        Connection conn = new koneksi().connect();
 
+        // 1. Simpan data pegawai jika belum ada
+        PreparedStatement checkPegawai = conn.prepareStatement(
+            "SELECT nip FROM pegawai WHERE nip = ?"
+        );
+        checkPegawai.setString(1, nip_field.getText());
+        ResultSet rs = checkPegawai.executeQuery();
+
+        if (!rs.next()) { // kalau belum ada, insert
+            PreparedStatement stmtPegawai = conn.prepareStatement(
+                "INSERT INTO pegawai (nip, nama, jabatan) VALUES (?, ?, ?)"
+            );
+            stmtPegawai.setString(1, nip_field.getText());
+            stmtPegawai.setString(2, nama_pegawaifield.getText());
+            stmtPegawai.setString(3, jabatan_field.getText());
+            stmtPegawai.executeUpdate();
+        }
+
+        // 2. Simpan data ke tabel gaji
+        PreparedStatement stmtGaji = conn.prepareStatement(
+            "INSERT INTO gaji (nip_pegawai, id_pangkat, kenaikan) VALUES (?, ?, ?)"
+        );
+        stmtGaji.setString(1, nip_field.getText());
+        stmtGaji.setInt(2, idPangkat);
+        stmtGaji.setDate(3, java.sql.Date.valueOf(date));
+        stmtGaji.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+
+        new formtabelpegawai().setVisible(true);
+        dispose();
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Data Gagal Disimpan: " + ex.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Terjadi error: " + e.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void combotahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combotahunActionPerformed
 
     }//GEN-LAST:event_combotahunActionPerformed
+    
+public static class PangkatItem {
+    public final int idPangkat;
+    public final String pangkat;
 
+    public PangkatItem(int idPangkat, String pangkat) {
+        this.idPangkat = idPangkat;
+        this.pangkat = pangkat;
+    }
+
+    @Override
+    public String toString() {
+        return pangkat; // hanya tampilkan nama pangkat di combobox
+    }
+}
     /**
      * @param args the command line arguments
      */

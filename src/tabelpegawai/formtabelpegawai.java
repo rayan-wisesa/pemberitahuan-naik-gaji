@@ -38,10 +38,20 @@ public class formtabelpegawai extends javax.swing.JFrame {
         String sql;
         PreparedStatement stmt;
         if (keyword.isEmpty()) {
-                sql = "SELECT * FROM kenaikan_gaji";
+                sql = "SELECT pegawai.nama, pegawai.nip, pangkat.pangkat, pegawai.jabatan, gaji.kenaikan AS bulan_kenaikan " +
+                  "FROM gaji " +
+                  "JOIN pegawai ON gaji.nip_pegawai = pegawai.nip " +
+                  "JOIN pangkat ON gaji.id_pangkat = pangkat.id_pangkat";
+
                 stmt = conn.prepareStatement(sql);
             } else {
-                sql = "SELECT * FROM kenaikan_gaji WHERE nama LIKE ?";
+                sql = "SELECT pegawai.nama, pegawai.nip, pangkat.pangkat, pegawai.jabatan, gaji.kenaikan AS bulan_kenaikan " +
+                  "FROM gaji " +
+                  "JOIN pegawai ON gaji.nip_pegawai = pegawai.nip " +
+                  "JOIN pangkat ON gaji.id_pangkat = pangkat.id_pangkat " +
+                  "WHERE pegawai.nama LIKE ?";
+
+;
                 stmt = conn.prepareStatement(sql);
                 stmt.setString(1, "%" + keyword + "%");
             }
@@ -52,7 +62,7 @@ public class formtabelpegawai extends javax.swing.JFrame {
                 tabel_gaji.addRow(new Object[]{
                 no++,
                 res.getString("nama"),
-                res.getString("nip_pegawai"),
+                res.getString("nip"),
                 res.getString("pangkat"),
                 res.getString("jabatan"),
                 res.getString("bulan_kenaikan")
