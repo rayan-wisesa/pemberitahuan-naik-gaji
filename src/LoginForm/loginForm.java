@@ -1,50 +1,118 @@
 package LoginForm;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.ImageIcon;
-import java.awt.Image; 
+import java.awt.Image;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import tabelpegawai.formtabelpegawai;
 
 public class loginForm extends javax.swing.JFrame {
-
-    String password = "setdakotanpin";
-    String username = "bagianumum";
     
+    private void efekHover(javax.swing.JButton btn) {
+    java.awt.Color normal = btn.getBackground();
+    java.awt.Color hover  = new java.awt.Color(21, 128, 61);
+
+    btn.setOpaque(true);
+
+    btn.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseEntered(java.awt.event.MouseEvent e) {
+            btn.setBackground(hover);
+        }
+
+        @Override
+        public void mouseExited(java.awt.event.MouseEvent e) {
+            btn.setBackground(normal);
+        }
+    });
+}
+
+    private final String loginUSERNAME = "bagianumum";
+    private final String loginPASSWORD = "setdakotanpin";
+
     public loginForm() {
         initComponents();
+        
+    // Enter untuk Login
+       getRootPane().setDefaultButton(Login);
+        
+        // Style FlatLaf
+        Login.putClientProperty(
+        "FlatLaf.style",
+        "arc:18; font:$h3.font"
+    );
 
+    jusernamefield.putClientProperty(
+        "FlatLaf.style", "arc:14"
+    );
+
+    jpasswordfield.putClientProperty(
+        "FlatLaf.style", "arc:14"
+    );
+
+    // Placeholder 
+    jusernamefield.putClientProperty(
+    "JTextField.placeholderText", "Masukkan Username"
+    );
+    jpasswordfield.putClientProperty(
+        "JTextField.placeholderText", "Masukkan Password"
+    );
+      
+        efekHover(Login);
+
+        getRootPane().putClientProperty("JComponent.arc", 20);
+        
+        setLocationRelativeTo(null);  // tengah layar
+        
+        getRootPane().setBorder(
+        javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 12)
+        );
+        
+        jusernamefield.putClientProperty("JComponent.roundRect", true);
+        jpasswordfield.putClientProperty("JComponent.roundRect", true);
+
+        Login.setText("MASUK");
+        Login.setFont(new java.awt.Font("Segoe UI Semibold", 0, 20));
+        Login.setBackground(new java.awt.Color(22, 163, 74)); 
+        Login.setForeground(java.awt.Color.WHITE);
+        Login.setFocusPainted(false);
+        Login.setBorderPainted(false);
+        Login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+
+        // Load gambar logo
         String path1 = "/images/Lambang_Kota_Tanjungpinang.png";
-        int lebar1 = 100; 
-        int tinggi1 = 170; 
+        tampilkanGambar(lblGambar, path1, 105, 123);
+
+        // Load gambar background
+        String path2 = "/images/kantorwalikota.jpeg";
+        tampilkanGambar(lblGambarKedua, path2, 1000, 801);
         
-        tampilkanGambar(lblGambar, path1, lebar1, tinggi1); 
+        lblGambarKedua.setOpaque(true);
+        lblGambarKedua.setBackground(new java.awt.Color(0, 0, 0, 70));
+
+        jpasswordfield.addActionListener(e -> Login.doClick());
+
+
+        setLocationRelativeTo(null); // Tengah layar
         
-        String path2 = "/images/kantorwalikota.jpeg"; 
-        int lebar2 = 1000; 
-        int tinggi2 = 801;
-        
-        tampilkanGambar(lblGambarKedua, path2, lebar2, tinggi2);
+        jusernamefield.requestFocusInWindow(); // Auto ke username
+
     }
-    
+
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
         try {
             java.net.URL imageUrl = getClass().getResource(pathGambar);
-
             if (imageUrl != null) {
-                ImageIcon originalIcon = new ImageIcon(imageUrl);
-                Image img = originalIcon.getImage();
-                Image scaledImage = img.getScaledInstance(lebar, tinggi, Image.SCALE_SMOOTH);
-                ImageIcon finalIcon = new ImageIcon(scaledImage);
-                label.setIcon(finalIcon);
+                ImageIcon icon = new ImageIcon(imageUrl);
+                Image img = icon.getImage().getScaledInstance(
+                        lebar, tinggi, Image.SCALE_SMOOTH);
+                label.setIcon(new ImageIcon(img));
                 label.setText("");
-            } else {
-                System.err.println("Gambar tidak ditemukan pada path: " + pathGambar);
             }
-
         } catch (Exception e) {
-            System.err.println("Gagal memproses gambar: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Gagal load gambar: " + e.getMessage());
         }
     }
 
@@ -57,7 +125,7 @@ public class loginForm extends javax.swing.JFrame {
         WELCOME = new javax.swing.JLabel();
         PASSWORD = new javax.swing.JLabel();
         jusernamefield = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Login = new javax.swing.JButton();
         lblGambar = new javax.swing.JLabel();
         lblGambarKedua = new javax.swing.JLabel();
         USERNAME = new javax.swing.JLabel();
@@ -65,13 +133,13 @@ public class loginForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel1.setText("PEMERINTAHAN KOTA");
 
-        jLabel2.setFont(new java.awt.Font("Franklin Gothic Medium", 3, 48)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 48)); // NOI18N
         jLabel2.setText("TANJUNGPINANG");
 
-        WELCOME.setFont(new java.awt.Font("Bookman Old Style", 1, 28)); // NOI18N
+        WELCOME.setFont(new java.awt.Font("Segoe UI Semibold", 1, 28)); // NOI18N
         WELCOME.setText("WELCOME");
 
         PASSWORD.setFont(new java.awt.Font("Microsoft YaHei", 1, 16)); // NOI18N
@@ -84,13 +152,13 @@ public class loginForm extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(51, 255, 51));
-        jButton1.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 51));
-        jButton1.setText("LOGIN");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Login.setBackground(new java.awt.Color(51, 255, 51));
+        Login.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        Login.setForeground(new java.awt.Color(51, 51, 51));
+        Login.setText("LOGIN");
+        Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                LoginActionPerformed(evt);
             }
         });
 
@@ -108,40 +176,39 @@ public class loginForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(lblGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(197, 197, 197)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(PASSWORD)
                             .addComponent(jusernamefield, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                             .addComponent(USERNAME)
-                            .addComponent(jpasswordfield, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)))
+                            .addComponent(jpasswordfield, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(242, 242, 242)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(282, 282, 282)
-                        .addComponent(WELCOME)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblGambarKedua, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
+                        .addComponent(WELCOME))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(lblGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))))
+                .addGap(31, 31, 31)
+                .addComponent(lblGambarKedua, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel2))
-                    .addComponent(lblGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                    .addComponent(lblGambar, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addComponent(WELCOME)
                 .addGap(29, 29, 29)
                 .addComponent(USERNAME)
@@ -152,7 +219,7 @@ public class loginForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpasswordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(262, 262, 262))
             .addComponent(lblGambarKedua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -164,57 +231,50 @@ public class loginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jusernamefieldActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
  // TODO add your handling code here:
-        if(jpasswordfield.getText().equals(password)&&jusernamefield.getText().equals(username)){
-            JOptionPane.showMessageDialog(null,"Password Anda Benar","Pesan",JOptionPane.INFORMATION_MESSAGE);
+       String user = jusernamefield.getText().trim();
+       String pass = new String(jpasswordfield.getPassword()).trim();
+
+            if (user.isEmpty() || pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+            "Username dan Password wajib diisi",
+            "Peringatan",
+            JOptionPane.WARNING_MESSAGE);
+            return;
+            }
+
+        if (user.equals(loginUSERNAME) && pass.equals(loginPASSWORD)) {
+            JOptionPane.showMessageDialog(this,
+                    "Login berhasil",
+                    "Informasi",
+                    JOptionPane.INFORMATION_MESSAGE);
             new formtabelpegawai().setVisible(true);
             dispose();
-        }else{
-            JOptionPane.showMessageDialog(null,"Password Anda Salah","Pesan",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Username atau Password salah",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_LoginActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(loginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(loginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(loginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(loginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    FlatLightLaf.setup();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new loginForm().setVisible(true);
-            }
-        });
-    }
+    java.awt.EventQueue.invokeLater(() -> {
+        new loginForm().setVisible(true);
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Login;
     private javax.swing.JLabel PASSWORD;
     private javax.swing.JLabel USERNAME;
     private javax.swing.JLabel WELCOME;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField jpasswordfield;

@@ -1,64 +1,68 @@
 package tabelpegawai;
+
 import javax.swing.ImageIcon;
-import java.awt.Image; 
-import java.awt.event.ComponentEvent;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.awt.event.ComponentAdapter;
-import tabelpegawai.koneksi;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
+
+import java.awt.Image;
+import java.awt.Color;
+import java.awt.Cursor;
+
 import java.time.LocalDate;
-
-public class formeditdata extends javax.swing.JFrame {
-    
-    private String SQL; 
-    
-    public formeditdata() {
-        initComponents();
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-    public void componentResized(ComponentEvent e) {
-        int frameWidth = getWidth();
-        int frameHeight = getHeight();
-
-        // Hitung ulang posisi komponen seperti di atas
-        // (copy ulang logika setBounds di sini)
-    }
-});
-        
+import java.sql.SQLException;
 
 
-    
-    }
-    
-    public formeditdata(String nama, String nip, String pangkat, String jabatan, String bulan, String tahun) {
+public class formeditdata extends javax.swing.JFrame {     
+       
+public formeditdata() {
     initComponents();
-            int currentYear = java.time.Year.now().getValue();
-        for (int i = currentYear; i <= currentYear + 10; i++) {
+
+    setSize(1300, 750);
+    setLocationRelativeTo(null);
+    setResizable(false);
+
+    int currentYear = java.time.Year.now().getValue();
+    for (int i = currentYear; i <= currentYear + 10; i++) {
         combotahun.addItem(String.valueOf(i));
     }
-        nama_pegawaifield.setText(nama);
-        nip_field.setText(nip);
-        comboboxpangkat.setSelectedItem(pangkat);
-        jabatan_field.setText(jabatan);
-        combobulan.setSelectedItem(bulan);
-        combotahun.setSelectedItem(tahun);
-        this.setSize(1300, 750);   // sesuaikan dengan ukuran desain
-        this.setLocationRelativeTo(null); // agar muncul di tengah layar
-        this.setResizable(false);
-        
-                jLabel1.setBounds(0, 0, getWidth(), getHeight());
-        
-        String pathLogo = "/images/Lambang_Kota_Tanjungpinang.png";
-        int lebarLogo = 100; 
-        int tinggiLogo = 120; 
-        
-        tampilkanGambar(Logo_Tanjungpinang, pathLogo, lebarLogo, tinggiLogo);
 
+    tampilkanGambar(
+        Logo_Tanjungpinang,
+        "/images/Lambang_Kota_Tanjungpinang.png",
+        100,
+        120
+    );
+
+    styleButton(jButton1, new Color(34,197,94));
+    styleButton(jButton3, new Color(239,68,68));
 }
 
+public formeditdata(String nama, String nip, String pangkat,
+                    String jabatan, String bulan, String tahun) {
+
+    this(); // panggil constructor kosong dulu
+
+    nama_pegawaifield.setText(nama);
+    nip_field.setText(nip);
+    comboboxpangkat.setSelectedItem(pangkat);
+    jabatan_field.setText(jabatan);
+    combobulan.setSelectedItem(bulan);
+    combotahun.setSelectedItem(tahun);
+}
+
+private void styleButton(JButton btn, Color bg) {
+    btn.setBackground(bg);
+    btn.setForeground(Color.WHITE);
+    btn.setFocusPainted(false);
+    btn.setBorderPainted(false);
+    btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    btn.putClientProperty(
+        "FlatLaf.style",
+        "arc:18; font:bold"
+    );
+}
 
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
         try {
@@ -221,12 +225,12 @@ public class formeditdata extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(combobulan, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(combotahun, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(54, 54, 54))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 630, 450));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 630, 420));
 
         jButton3.setBackground(java.awt.Color.red);
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -265,7 +269,22 @@ public class formeditdata extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+    
+    if (nama_pegawaifield.getText().trim().isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Nama tidak boleh kosong");
+    return;
+}
+
+    if (nip_field.getText().trim().isEmpty()) {
+    JOptionPane.showMessageDialog(this, "NIP tidak boleh kosong");
+    return;
+}
+
+    if (jabatan_field.getText().trim().isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Jabatan tidak boleh kosong");
+    return;
+}
+
     int tanggal = 1;
     String bulanStr = combobulan.getSelectedItem().toString();
     String pangkatStr = comboboxpangkat.getSelectedItem().toString();
@@ -331,37 +350,12 @@ public class formeditdata extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(formeditdata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(formeditdata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(formeditdata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(formeditdata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    com.formdev.flatlaf.FlatLightLaf.setup();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new formeditdata().setVisible(true);
-            }
-        });
-    }
+    java.awt.EventQueue.invokeLater(() -> {
+        new formeditdata().setVisible(true);
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Logo_Tanjungpinang;

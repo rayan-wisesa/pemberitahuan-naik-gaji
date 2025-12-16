@@ -4,14 +4,14 @@ import javax.swing.ImageIcon;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import tabelpegawai.koneksi;
 import java.sql.*;
-import javax.swing.table.DefaultTableModel;
-import tabelpegawai.formeditdata;
 import java.time.LocalDate;
-import javax.swing.table.TableRowSorter;
-import javax.swing.RowFilter;
 
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.table.JTableHeader;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class formtabelpegawai extends javax.swing.JFrame {
     
@@ -65,31 +65,101 @@ public class formtabelpegawai extends javax.swing.JFrame {
      }
 
     public formtabelpegawai() {
-        initComponents();
-        this.addComponentListener(new ComponentAdapter() {
-    @Override
-    public void componentResized(ComponentEvent e) {
-        int frameWidth = getWidth();
-        int frameHeight = getHeight();
+    initComponents();
 
-        // Hitung ulang posisi komponen seperti di atas
-        // (copy ulang logika setBounds di sini)
-            }
-        });
+    // frame
+    setTitle("Data Kenaikan Gaji Pegawai");
+    setSize(1245, 690);
+    setLocationRelativeTo(null);
+    setResizable(false);
 
-    
-       
-        jLabel1.setBounds(0, 0, getWidth(), getHeight());
-        
-        String pathLogo = "/images/Lambang_Kota_Tanjungpinang.png";
-        int lebarLogo = 80; 
-        int tinggiLogo = 100; 
-        
-        tampilkanGambar(Logo_Tanjungpinang, pathLogo, lebarLogo, tinggiLogo); 
-        this.setSize(1245, 690);   // sesuaikan dengan ukuran desain
-    this.setLocationRelativeTo(null); // agar muncul di tengah layar
-    this.setResizable(false);
+    // logo
+    tampilkanGambar(
+        Logo_Tanjungpinang,
+        "/images/Lambang_Kota_Tanjungpinang.png",
+        80,
+        100
+    );
+
+    // field pencarian
+    fieldcari.putClientProperty(
+        "JTextField.placeholderText",
+        "Cari nama pegawai..."
+    );
+    fieldcari.putClientProperty(
+        "FlatLaf.style",
+        "arc:14"
+    );
+
+    // tombol
+    styleButton(btncari, new Color(59,130,246));   // Biru
+    styleButton(jButton1, new Color(34,197,94));   // Hijau
+    styleButton(jButton2, new Color(234,179,8));   // Kuning
+    styleButton(jButton4, new Color(239,68,68));   // Merah
+
+    // tabel
+    styleTable();
+    addTableHoverEffect();
+
+    // fitur enter untuk cari
+    fieldcari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+    public void insertUpdate(javax.swing.event.DocumentEvent e) { search(); }
+    public void removeUpdate(javax.swing.event.DocumentEvent e) { search(); }
+    public void changedUpdate(javax.swing.event.DocumentEvent e) { search(); }
+
+    private void search() {
+        tampilData(fieldcari.getText().trim());
     }
+});
+
+
+    tampilData("");
+}
+    
+private void styleButton(JButton btn, Color color) {
+    btn.setBackground(color);
+    btn.setForeground(Color.WHITE);
+    btn.setFocusPainted(false);
+    btn.setBorderPainted(false);
+    btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+    btn.putClientProperty(
+        "FlatLaf.style",
+        "arc:18; font:bold"
+    );
+}
+
+private void styleTable() {
+    tabel_gajiform.setRowHeight(36);
+    tabel_gajiform.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+
+    tabel_gajiform.setShowVerticalLines(false);
+    tabel_gajiform.setShowHorizontalLines(true);
+    tabel_gajiform.setGridColor(new Color(230,230,230));
+
+    tabel_gajiform.setSelectionBackground(new Color(59,130,246));
+    tabel_gajiform.setSelectionForeground(Color.WHITE);
+
+    JTableHeader header = tabel_gajiform.getTableHeader();
+    header.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+    header.setBackground(new Color(243,244,246));
+    header.setForeground(Color.BLACK);
+    header.setPreferredSize(new Dimension(header.getWidth(), 40));
+
+    // Rata tengah header
+    ((DefaultTableCellRenderer) header.getDefaultRenderer())
+        .setHorizontalAlignment(JLabel.CENTER);
+}
+
+private void addTableHoverEffect() {
+    tabel_gajiform.addMouseMotionListener(new MouseMotionAdapter() {
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            int row = tabel_gajiform.rowAtPoint(e.getPoint());
+            tabel_gajiform.setRowSelectionInterval(row, row);
+        }
+    });
+}
     
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
         try {
@@ -369,7 +439,17 @@ if (row != -1) {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
     java.sql.Connection conn = new koneksi().connect();
     int row = tabel_gajiform.getSelectedRow();
-    int ok = JOptionPane.showConfirmDialog(null,"Apakah yakin akan menghapus Data?","Konfirmasi",JOptionPane.YES_NO_OPTION);
+    UIManager.put("OptionPane.messageFont", new Font("Segoe UI", Font.PLAIN, 14));
+    UIManager.put("OptionPane.buttonFont", new Font("Segoe UI", Font.BOLD, 13));
+
+    int ok = JOptionPane.showConfirmDialog(
+        this,
+        "Yakin ingin menghapus data pegawai?",
+        "Konfirmasi",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.WARNING_MESSAGE
+    );
+
     if(ok==0){
         try{
             SQL="delete from kenaikan_gaji where nip_pegawai='"+tabel_gajiform.getValueAt(row, 2).toString()+"'";
@@ -387,37 +467,13 @@ if (row != -1) {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(formtabelpegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(formtabelpegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(formtabelpegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(formtabelpegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    com.formdev.flatlaf.FlatLightLaf.setup();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new formtabelpegawai().setVisible(true);
-            }
-        });
-    }
+    java.awt.EventQueue.invokeLater(() -> {
+        new formtabelpegawai().setVisible(true);
+    });
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Logo_Tanjungpinang;
