@@ -102,15 +102,22 @@ public class formtabelpegawai extends javax.swing.JFrame {
     );
 
     // tombol
-    styleButton(btncari, new Color(59,130,246));   // Biru
-    styleButton(jButton1, new Color(34,197,94));   // Hijau
-    styleButton(jButton2, new Color(234,179,8));   // Kuning
-    styleButton(jButton4, new Color(239,68,68));   // Merah
+    styleButton(btncari, new Color(59,130,246));   
+    styleButton(jButton1, new Color(34,197,94));
+    styleButton(jButton2, new Color(234,179,8));   
+    styleButton(jButton4, new Color(239,68,68)); 
 
     // tabel
     styleTable();
-    addTableHoverEffect();
-
+    
+    // pilih tabel
+    tabel_gajiform.setDragEnabled(false);
+    tabel_gajiform.setCellSelectionEnabled(false);
+    tabel_gajiform.setRowSelectionAllowed(true);
+    tabel_gajiform.setColumnSelectionAllowed(false);
+    tabel_gajiform.setFocusable(false);
+    tabel_gajiform.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    
     // fitur enter untuk cari
     fieldcari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
     public void insertUpdate(javax.swing.event.DocumentEvent e) { search(); }
@@ -142,6 +149,17 @@ private void styleButton(JButton btn, Color color) {
 private void styleTable() {
     tabel_gajiform.setRowHeight(36);
     tabel_gajiform.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+    
+    tabel_gajiform.getTableHeader().setReorderingAllowed(false);
+    tabel_gajiform.getTableHeader().setResizingAllowed(true);
+    
+    // Cancel selection
+    jLabel1.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            tabel_gajiform.clearSelection();
+    }
+});
 
     tabel_gajiform.setShowVerticalLines(false);
     tabel_gajiform.setShowHorizontalLines(true);
@@ -159,16 +177,6 @@ private void styleTable() {
     // Rata tengah header
     ((DefaultTableCellRenderer) header.getDefaultRenderer())
         .setHorizontalAlignment(JLabel.CENTER);
-}
-
-private void addTableHoverEffect() {
-    tabel_gajiform.addMouseMotionListener(new MouseMotionAdapter() {
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            int row = tabel_gajiform.rowAtPoint(e.getPoint());
-            tabel_gajiform.setRowSelectionInterval(row, row);
-        }
-    });
 }
     
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
