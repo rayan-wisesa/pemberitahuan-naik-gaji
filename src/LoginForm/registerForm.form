@@ -48,8 +48,8 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="242" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblRegister" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Login" min="-2" pref="229" max="-2" attributes="0"/>
+                                  <Component id="lblLogin" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Register" min="-2" pref="229" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -57,7 +57,7 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="WELCOME" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="166" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <Component id="lblGambarKedua" pref="447" max="32767" attributes="0"/>
@@ -76,9 +76,9 @@
                   </Group>
                   <Component id="lblGambar" pref="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="88" max="32767" attributes="0"/>
+              <EmptySpace pref="87" max="32767" attributes="0"/>
               <Component id="WELCOME" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Component id="USERNAME" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jusernamefield" min="-2" pref="42" max="-2" attributes="0"/>
@@ -87,9 +87,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jpasswordfield" min="-2" pref="42" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Component id="Login" min="-2" pref="50" max="-2" attributes="0"/>
+              <Component id="Register" min="-2" pref="50" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblRegister" min="-2" max="-2" attributes="0"/>
+              <Component id="lblLogin" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="233" max="-2" attributes="0"/>
           </Group>
           <Component id="lblGambarKedua" alignment="0" max="32767" attributes="0"/>
@@ -118,7 +118,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI Semibold" size="28" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Login Akun"/>
+        <Property name="text" type="java.lang.String" value="REGISTER AKUN"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="PASSWORD">
@@ -139,7 +139,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jusernamefieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="Login">
+    <Component class="javax.swing.JButton" name="Register">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="ff" red="33" type="rgb"/>
@@ -150,10 +150,10 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="33" red="33" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="LOGIN"/>
+        <Property name="text" type="java.lang.String" value="MASUK"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LoginActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RegisterActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblGambar">
@@ -180,14 +180,12 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblRegister">
+    <Component class="javax.swing.JLabel" name="lblLogin">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&lt;html&gt;Belum punya akun? &lt;u&gt;Daftar di sini&lt;/u&gt;&lt;/html&gt;"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;Sudah punya akun? &lt;u&gt;Login disini&lt;/u&gt;&lt;/html&gt;"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblRegisterMouseClicked"/>
-        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblRegisterMouseEntered"/>
-        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblRegisterMouseExited"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblLoginMouseClicked"/>
       </Events>
     </Component>
   </SubComponents>

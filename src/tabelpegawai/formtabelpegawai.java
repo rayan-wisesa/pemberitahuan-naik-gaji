@@ -115,7 +115,8 @@ public class formtabelpegawai extends javax.swing.JFrame {
 
     // tombol  
     styleButton(jButton1, new Color(34,197,94));
-    styleButton(jButton2, new Color(234,179,8));   
+    styleButton(jButton2, new Color(234,179,8));
+    styleButton(jButton3, new Color(22, 101, 52));
     styleButton(jButton4, new Color(239,68,68)); 
 
     // tabel
@@ -270,6 +271,7 @@ private void styleTable() {
         tabel_gajiform = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         fieldcari = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         Logo_Tanjungpinang = new javax.swing.JLabel();
@@ -399,7 +401,7 @@ private void styleTable() {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 550, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 550, 160, -1));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("Edit Data");
@@ -409,6 +411,10 @@ private void styleTable() {
             }
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 550, 130, -1));
+
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton3.setText("Tambah Admin");
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 550, -1, -1));
 
         fieldcari.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         fieldcari.addActionListener(new java.awt.event.ActionListener() {
@@ -560,6 +566,7 @@ if (row == -1) {
     private javax.swing.JTextField fieldcari;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

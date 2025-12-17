@@ -1,15 +1,16 @@
 package LoginForm;
 
-import java.awt.Cursor;
-import java.awt.Color;
 import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.Color;
+import java.awt.Cursor;
+import LoginForm.loginForm;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import tabelpegawai.formtabelpegawai;
 
-public class loginForm extends javax.swing.JFrame {
+public class registerForm extends javax.swing.JFrame {
     
     private void efekHover(javax.swing.JButton btn) {
     java.awt.Color normal = btn.getBackground();
@@ -33,18 +34,19 @@ public class loginForm extends javax.swing.JFrame {
     private final String loginUSERNAME = "bagianumum";
     private final String loginPASSWORD = "setdakotanpin";
 
-    public loginForm() {
+    public registerForm() {
         initComponents();
         
-    // Enter untuk Login
-       getRootPane().setDefaultButton(Login);
+    // Enter untuk register
+       getRootPane().setDefaultButton(Register);
+       Register.setText("DAFTAR");
         
         // Style FlatLaf
-        Login.putClientProperty(
+        Register.putClientProperty(
         "FlatLaf.style",
         "arc:18; font:$h3.font"
     );
-        
+
     jusernamefield.putClientProperty(
         "FlatLaf.style", "arc:14"
     );
@@ -53,10 +55,35 @@ public class loginForm extends javax.swing.JFrame {
         "FlatLaf.style", "arc:14"
     );
     
-    // pengganti welcome
-    WELCOME.setText("LOGIN AKUN");
-    WELCOME.setFont(new java.awt.Font("Segoe UI Semibold", 1, 30));
-    WELCOME.setForeground(new Color(22, 163, 74)); 
+    // Pengganti welcome
+    WELCOME.setText("REGISTER AKUN");
+    WELCOME.setForeground(new Color(22, 163, 74));
+
+    
+    // link loginForm
+    lblLogin.setText("<html>Sudah punya akun? <u>Login disini</u></html>");
+    lblLogin.setFont(new java.awt.Font("Segoe UI", 0, 14));
+    lblLogin.setForeground(new Color(59, 130, 246));
+    lblLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+    lblLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            lblLoginMouseClicked(evt);
+    }
+
+        @Override
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            lblLogin.setForeground(new Color(239, 68, 68));
+            lblLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            lblLogin.setFont(new java.awt.Font("Segoe UI", 0, 14));
+    }
+
+        @Override
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            lblLogin.setForeground(new Color(59, 130, 246));
+    }
+});
 
     // Placeholder 
     jusernamefield.putClientProperty(
@@ -66,7 +93,7 @@ public class loginForm extends javax.swing.JFrame {
         "JTextField.placeholderText", "Masukkan Password"
     );
       
-        efekHover(Login);
+        efekHover(Register);
 
         getRootPane().putClientProperty("JComponent.arc", 20);
         
@@ -79,17 +106,14 @@ public class loginForm extends javax.swing.JFrame {
         jusernamefield.putClientProperty("JComponent.roundRect", true);
         jpasswordfield.putClientProperty("JComponent.roundRect", true);
 
-        Login.setText("MASUK");
-        Login.setBackground(new java.awt.Color(22, 163, 74)); 
-        Login.setForeground(java.awt.Color.WHITE);
-        Login.setFocusPainted(false);
-        Login.setBorderPainted(false);
-        Login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        
-        Login.putClientProperty("JButton.buttonType", "roundRect");
-        Login.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18));
-        Login.setBackground(new Color(22, 163, 74));
-        Login.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        Register.setText("MASUK");
+        Register.setFont(new java.awt.Font("Segoe UI Semibold", 0, 20));
+        Register.setBackground(new java.awt.Color(22, 163, 74)); 
+        Register.setForeground(java.awt.Color.WHITE);
+        Register.setFocusPainted(false);
+        Register.setBorderPainted(false);
+        Register.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
 
         // Load gambar logo
         String path1 = "/images/Lambang_Kota_Tanjungpinang.png";
@@ -102,7 +126,7 @@ public class loginForm extends javax.swing.JFrame {
         lblGambarKedua.setOpaque(true);
         lblGambarKedua.setBackground(new java.awt.Color(0, 0, 0, 70));
 
-        jpasswordfield.addActionListener(e -> Login.doClick());
+        jpasswordfield.addActionListener(e -> Register.doClick());
 
 
         setLocationRelativeTo(null); // Tengah layar
@@ -110,7 +134,7 @@ public class loginForm extends javax.swing.JFrame {
         jusernamefield.requestFocusInWindow(); // Auto ke username
 
     }
-    
+
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
         try {
             java.net.URL imageUrl = getClass().getResource(pathGambar);
@@ -135,12 +159,12 @@ public class loginForm extends javax.swing.JFrame {
         WELCOME = new javax.swing.JLabel();
         PASSWORD = new javax.swing.JLabel();
         jusernamefield = new javax.swing.JTextField();
-        Login = new javax.swing.JButton();
+        Register = new javax.swing.JButton();
         lblGambar = new javax.swing.JLabel();
         lblGambarKedua = new javax.swing.JLabel();
         USERNAME = new javax.swing.JLabel();
         jpasswordfield = new javax.swing.JPasswordField();
-        lblRegister = new javax.swing.JLabel();
+        lblLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,7 +175,7 @@ public class loginForm extends javax.swing.JFrame {
         jLabel2.setText("TANJUNGPINANG");
 
         WELCOME.setFont(new java.awt.Font("Segoe UI Semibold", 1, 28)); // NOI18N
-        WELCOME.setText("Login Akun");
+        WELCOME.setText("REGISTER AKUN");
 
         PASSWORD.setFont(new java.awt.Font("Microsoft YaHei", 1, 16)); // NOI18N
         PASSWORD.setText("PASSWORD");
@@ -163,13 +187,13 @@ public class loginForm extends javax.swing.JFrame {
             }
         });
 
-        Login.setBackground(new java.awt.Color(51, 255, 51));
-        Login.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        Login.setForeground(new java.awt.Color(51, 51, 51));
-        Login.setText("LOGIN");
-        Login.addActionListener(new java.awt.event.ActionListener() {
+        Register.setBackground(new java.awt.Color(51, 255, 51));
+        Register.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        Register.setForeground(new java.awt.Color(51, 51, 51));
+        Register.setText("MASUK");
+        Register.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginActionPerformed(evt);
+                RegisterActionPerformed(evt);
             }
         });
 
@@ -180,16 +204,10 @@ public class loginForm extends javax.swing.JFrame {
 
         jpasswordfield.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
 
-        lblRegister.setText("<html>Belum punya akun? <u>Daftar di sini</u></html>");
-        lblRegister.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblLogin.setText("<html>Sudah punya akun? <u>Login disini</u></html>");
+        lblLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblRegisterMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblRegisterMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblRegisterMouseExited(evt);
+                lblLoginMouseClicked(evt);
             }
         });
 
@@ -218,12 +236,12 @@ public class loginForm extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(242, 242, 242)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblRegister, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(lblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Register, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(31, 31, 31))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(WELCOME)
-                        .addGap(166, 166, 166)))
+                        .addGap(163, 163, 163)))
                 .addComponent(lblGambarKedua, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -236,9 +254,9 @@ public class loginForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2))
                     .addComponent(lblGambar, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addComponent(WELCOME)
-                .addGap(28, 28, 28)
+                .addGap(29, 29, 29)
                 .addComponent(USERNAME)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jusernamefield, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -247,9 +265,9 @@ public class loginForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpasswordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Register, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblRegister, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(233, 233, 233))
             .addComponent(lblGambarKedua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -261,48 +279,32 @@ public class loginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jusernamefieldActionPerformed
 
-    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
- // TODO add your handling code here:
-       String user = jusernamefield.getText().trim();
-       String pass = new String(jpasswordfield.getPassword()).trim();
+    private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
+    String user = jusernamefield.getText().trim();
+    String pass = new String(jpasswordfield.getPassword()).trim();
 
-            if (user.isEmpty() || pass.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
+    if (user.isEmpty() || pass.isEmpty()) {
+        JOptionPane.showMessageDialog(this,
             "Username dan Password wajib diisi",
             "Peringatan",
             JOptionPane.WARNING_MESSAGE);
-            return;
-            }
+        return;
+    }
 
-        if (user.equals(loginUSERNAME) && pass.equals(loginPASSWORD)) {
-            JOptionPane.showMessageDialog(this,
-                    "Login berhasil",
-                    "Informasi",
-                    JOptionPane.INFORMATION_MESSAGE);
-            new formtabelpegawai().setVisible(true);
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Username atau Password salah",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_LoginActionPerformed
+    JOptionPane.showMessageDialog(this,
+        "Registrasi berhasil!\nSilakan login.",
+        "Informasi",
+        JOptionPane.INFORMATION_MESSAGE);
 
-    private void lblRegisterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseEntered
-        lblRegister.setForeground(new Color(239, 68, 68));
-        lblRegister.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lblRegister.setFont(new java.awt.Font("Segoe UI", 0, 14));
-    }//GEN-LAST:event_lblRegisterMouseEntered
+    new loginForm().setVisible(true);
+    dispose();
+    }//GEN-LAST:event_RegisterActionPerformed
 
-    private void lblRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseClicked
-        new registerForm().setVisible(true);
-        this.dispose(); // menutup form login
-    }//GEN-LAST:event_lblRegisterMouseClicked
+    private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
+        new loginForm().setVisible(true);
+            dispose(); // tutup registerForm
+    }//GEN-LAST:event_lblLoginMouseClicked
 
-    private void lblRegisterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseExited
-        lblRegister.setForeground(new Color(59, 130, 246)); 
-    }//GEN-LAST:event_lblRegisterMouseExited
     /**
      * @param args the command line arguments
      */
@@ -310,13 +312,13 @@ public class loginForm extends javax.swing.JFrame {
     FlatLightLaf.setup();
 
     java.awt.EventQueue.invokeLater(() -> {
-        new loginForm().setVisible(true);
+        new registerForm().setVisible(true);
     });
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Login;
     private javax.swing.JLabel PASSWORD;
+    private javax.swing.JButton Register;
     private javax.swing.JLabel USERNAME;
     private javax.swing.JLabel WELCOME;
     private javax.swing.JLabel jLabel1;
@@ -325,6 +327,6 @@ public class loginForm extends javax.swing.JFrame {
     private javax.swing.JTextField jusernamefield;
     private javax.swing.JLabel lblGambar;
     private javax.swing.JLabel lblGambarKedua;
-    private javax.swing.JLabel lblRegister;
+    private javax.swing.JLabel lblLogin;
     // End of variables declaration//GEN-END:variables
 }
