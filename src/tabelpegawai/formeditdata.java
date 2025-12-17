@@ -4,20 +4,25 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
+import java.sql.PreparedStatement;
 import java.awt.Image;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.sql.Connection;
+import java.sql.ResultSet;
 
 import java.time.LocalDate;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class formeditdata extends javax.swing.JFrame {     
        
 public formeditdata() {
     initComponents();
-
+    loadPangkatComboBox();
+    
     setSize(1300, 750);
     setLocationRelativeTo(null);
     setResizable(false);
@@ -62,6 +67,32 @@ private void styleButton(JButton btn, Color bg) {
         "FlatLaf.style",
         "arc:18; font:bold"
     );
+}
+
+private Map<String, Integer> pangkatMap = new HashMap<>();
+    
+
+private void loadPangkatComboBox() {
+    try {
+        Connection conn = new koneksi().connect();
+        PreparedStatement stmt = conn.prepareStatement("SELECT id_pangkat, pangkat FROM pangkat ORDER BY pangkat");
+        ResultSet rs = stmt.executeQuery();
+
+        comboboxpangkat.removeAllItems();
+        comboboxpangkat.addItem("--Pilih Pangkat--");
+
+        pangkatMap.clear(); // kosongkan map
+
+        while (rs.next()) {
+            int idPangkat = rs.getInt("id_pangkat");
+            String namaPangkat = rs.getString("pangkat");
+
+            comboboxpangkat.addItem(namaPangkat);   // tampilkan hanya nama
+            pangkatMap.put(namaPangkat, idPangkat); // simpan mapping nama → id
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Gagal load data pangkat: " + ex.getMessage());
+    }
 }
 
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
@@ -317,27 +348,39 @@ private void styleButton(JButton btn, Color bg) {
     
     int tahun = Integer.parseInt(combotahun.getSelectedItem().toString());
 
+    int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
+    
     // gabungkan jadi LocalDate
     LocalDate date = LocalDate.of(tahun, bulan, tanggal);
 
         java.sql.Connection conn = new koneksi().connect();
-    try{
-            java.sql.PreparedStatement stmt = conn.prepareStatement("UPDATE kenaikan_gaji SET nama=?, nip_pegawai=?, pangkat=?, jabatan=?, bulan_kenaikan=? WHERE nip_pegawai=?");
-            try{
-                stmt.setString(1, nama_pegawaifield.getText());
-                stmt.setString(2, nip_field.getText());
-                stmt.setString(3, comboboxpangkat.getSelectedItem().toString());
-                stmt.setString(4, jabatan_field.getText().toString());
-                stmt.setDate(5, java.sql.Date.valueOf(date));
-                stmt.setString(6, nip_field.getText()); // nip lama atau nip yang jadi kunci
-                stmt.executeUpdate();
-                JOptionPane.showMessageDialog(null,"Data Berhasil di Simpan","Pesan",JOptionPane.INFORMATION_MESSAGE);
-                new formtabelpegawai().setVisible(true);
-            dispose();
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null,"Data Gagal di Simpan","Pesan",JOptionPane.INFORMATION_MESSAGE);
-            }
-    }catch(Exception e){
+    try {
+
+    // 1. Update data pegawai (nama, jabatan)
+    PreparedStatement stmtPegawai = conn.prepareStatement(
+        "UPDATE pegawai SET nama=?, jabatan=? WHERE nip=?"
+    );
+    stmtPegawai.setString(1, nama_pegawaifield.getText());
+    stmtPegawai.setString(2, jabatan_field.getText());
+    stmtPegawai.setString(3, nip_field.getText());
+    stmtPegawai.executeUpdate();
+
+    PreparedStatement stmtGaji = conn.prepareStatement(
+        "UPDATE gaji SET id_pangkat=?, kenaikan=? WHERE nip_pegawai=?"
+    );
+    stmtGaji.setInt(1, idPangkat);
+    stmtGaji.setDate(2, java.sql.Date.valueOf(date)); // date dari input bulan/tahun
+    stmtGaji.setString(3, nip_field.getText());
+    stmtGaji.executeUpdate();
+
+    // 4. Pesan sukses dan buka tabel pegawai
+    JOptionPane.showMessageDialog(this, "Data Berhasil diupdate", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+    new formtabelpegawai().setVisible(true);
+    dispose();
+
+} catch (SQLException ex) {
+    JOptionPane.showMessageDialog(this, "Data Gagal diupdate: " + ex.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+}catch(Exception e){
 
     }
     }//GEN-LAST:event_jButton1ActionPerformed
