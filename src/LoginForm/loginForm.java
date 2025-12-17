@@ -5,9 +5,17 @@ import javax.swing.ImageIcon;
 import java.awt.Image;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.event.*;
+import java.sql.*;
+import java.sql.PreparedStatement;
 import tabelpegawai.formtabelpegawai;
+import tabelpegawai.koneksi;
+import tabelpegawaivisitor.formtabelpegawaivisitor;
 
 public class loginForm extends javax.swing.JFrame {
+    
+    private String SQL;
     
     private void efekHover(javax.swing.JButton btn) {
     java.awt.Color normal = btn.getBackground();
@@ -27,9 +35,6 @@ public class loginForm extends javax.swing.JFrame {
         }
     });
 }
-
-    private final String loginUSERNAME = "bagianumum";
-    private final String loginPASSWORD = "setdakotanpin";
 
     public loginForm() {
         initComponents();
@@ -233,30 +238,35 @@ public class loginForm extends javax.swing.JFrame {
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
  // TODO add your handling code here:
-       String user = jusernamefield.getText().trim();
-       String pass = new String(jpasswordfield.getPassword()).trim();
+        String username = jusernamefield.getText();
+        String password = new String(jpasswordfield.getPassword());
+        java.sql.Connection conn = new koneksi().connect();
+        
+        try {
+            String sql = "SELECT role FROM users WHERE username=? AND password=?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, username);
+            pst.setString(2, password);
 
-            if (user.isEmpty() || pass.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-            "Username dan Password wajib diisi",
-            "Peringatan",
-            JOptionPane.WARNING_MESSAGE);
-            return;
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                String role = rs.getString("role");
+                if (role.equals("admin")) {
+                    JOptionPane.showMessageDialog(this, "Login sebagai Admin");
+                    new formtabelpegawai().setVisible(true);
+                    dispose();
+                } else if (role.equals("user")) {
+                    JOptionPane.showMessageDialog(this, "Login sebagai User");
+                    new formtabelpegawaivisitor().setVisible(true);
+                    dispose();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Username/Password salah!");
             }
-
-        if (user.equals(loginUSERNAME) && pass.equals(loginPASSWORD)) {
-            JOptionPane.showMessageDialog(this,
-                    "Login berhasil",
-                    "Informasi",
-                    JOptionPane.INFORMATION_MESSAGE);
-            new formtabelpegawai().setVisible(true);
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Username atau Password salah",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
+
     }//GEN-LAST:event_LoginActionPerformed
 
     /**
