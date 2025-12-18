@@ -9,8 +9,32 @@ import java.awt.Image;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import tabelpegawai.formtabelpegawai;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.PreparedStatement;
+import java.sql.*;
+import tabelpegawai.koneksi;
 
 public class registerForm extends javax.swing.JFrame {
+    
+    private String SQL;
+    
+    private String hashPassword(String password) {
+    try {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hashedBytes = md.digest(password.getBytes());
+
+        // ubah byte ke hex string
+        StringBuilder sb = new StringBuilder();
+        for (byte b : hashedBytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    } catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException("Error hashing password", e);
+    }
+}
+
     
     private void efekHover(javax.swing.JButton btn) {
     java.awt.Color normal = btn.getBackground();
@@ -30,9 +54,6 @@ public class registerForm extends javax.swing.JFrame {
         }
     });
 }
-
-    private final String loginUSERNAME = "bagianumum";
-    private final String loginPASSWORD = "setdakotanpin";
 
     public registerForm() {
         initComponents();
@@ -282,7 +303,8 @@ public class registerForm extends javax.swing.JFrame {
     private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
     String user = jusernamefield.getText().trim();
     String pass = new String(jpasswordfield.getPassword()).trim();
-
+    java.sql.Connection conn = new koneksi().connect();
+    
     if (user.isEmpty() || pass.isEmpty()) {
         JOptionPane.showMessageDialog(this,
             "Username dan Password wajib diisi",
@@ -291,13 +313,42 @@ public class registerForm extends javax.swing.JFrame {
         return;
     }
 
-    JOptionPane.showMessageDialog(this,
-        "Registrasi berhasil!\nSilakan login.",
-        "Informasi",
-        JOptionPane.INFORMATION_MESSAGE);
+    // Hash password sebelum disimpan
+    String hashedPass = hashPassword(pass);
 
-    new loginForm().setVisible(true);
-    dispose();
+    PreparedStatement pst = null;
+
+    try {
+        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, 'user')";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, user);
+        pst.setString(2, hashedPass);
+        
+        int rows = pst.executeUpdate();
+        if (rows > 0) {
+            JOptionPane.showMessageDialog(this,
+                "Registrasi berhasil!\nSilakan login.",
+                "Informasi",
+                JOptionPane.INFORMATION_MESSAGE);
+
+            new loginForm().setVisible(true);
+            dispose();
+        }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "Terjadi kesalahan: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (pst != null) pst.close();
+            if (conn != null) conn.close();
+        } catch (Exception ex) {
+            // abaikan
+        }
+    }
+
     }//GEN-LAST:event_RegisterActionPerformed
 
     private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked

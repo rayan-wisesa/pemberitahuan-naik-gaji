@@ -14,10 +14,28 @@ import java.sql.PreparedStatement;
 import tabelpegawai.formtabelpegawai;
 import tabelpegawai.koneksi;
 import tabelpegawaivisitor.formtabelpegawaivisitor;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class loginForm extends javax.swing.JFrame {
     
     private String SQL;
+    
+    private String hashPassword(String password) {
+    try {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hashedBytes = md.digest(password.getBytes());
+
+        // ubah byte ke hex string
+        StringBuilder sb = new StringBuilder();
+        for (byte b : hashedBytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    } catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException("Error hashing password", e);
+    }
+}
     
     private void efekHover(javax.swing.JButton btn) {
     java.awt.Color normal = btn.getBackground();
@@ -268,35 +286,37 @@ public class loginForm extends javax.swing.JFrame {
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
  // TODO add your handling code here:
-        String username = jusernamefield.getText();
-        String password = new String(jpasswordfield.getPassword());
-        java.sql.Connection conn = new koneksi().connect();
-        
-        try {
-            String sql = "SELECT role FROM users WHERE username=? AND password=?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, username);
-            pst.setString(2, password);
+String username = jusernamefield.getText();
+String password = new String(jpasswordfield.getPassword());
+java.sql.Connection conn = new koneksi().connect();
 
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                String role = rs.getString("role");
-                if (role.equals("admin")) {
-                    JOptionPane.showMessageDialog(this, "Login sebagai Admin");
-                    new formtabelpegawai().setVisible(true);
-                    dispose();
-                } else if (role.equals("user")) {
-                    JOptionPane.showMessageDialog(this, "Login sebagai User");
-                    new formtabelpegawaivisitor().setVisible(true);
-                    dispose();
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Username/Password salah!");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+try {
+    // hash password input sebelum dibandingkan
+    String hashedPassword = hashPassword(password);
+
+    String sql = "SELECT role FROM users WHERE username=? AND password=?";
+    PreparedStatement pst = conn.prepareStatement(sql);
+    pst.setString(1, username);
+    pst.setString(2, hashedPassword);
+
+    ResultSet rs = pst.executeQuery();
+    if (rs.next()) {
+        String role = rs.getString("role");
+        if (role.equals("admin")) {
+            JOptionPane.showMessageDialog(this, "Login sebagai Admin");
+            new formtabelpegawai().setVisible(true);
+            dispose();
+        } else if (role.equals("user")) { // sesuai enum 'users'
+            JOptionPane.showMessageDialog(this, "Login sebagai User");
+            new formtabelpegawaivisitor().setVisible(true);
+            dispose();
         }
-
+    } else {
+        JOptionPane.showMessageDialog(this, "Username/Password salah!");
+    }
+} catch (SQLException ex) {
+    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+}
     }//GEN-LAST:event_LoginActionPerformed
 
     private void lblRegisterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseEntered
