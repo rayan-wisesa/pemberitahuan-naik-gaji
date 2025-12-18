@@ -1,5 +1,6 @@
-package tabelpegawai;
+package tabelpegawaiadmin;
 
+import tabelpegawai.*;
 import javax.swing.ImageIcon;
 import java.awt.*;
 import javax.swing.*;
@@ -13,71 +14,45 @@ import javax.swing.table.JTableHeader;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class formtabelpegawai extends javax.swing.JFrame {
+public class formtabelpegawaiadmin extends javax.swing.JFrame {
     
     private JTextField field_cari;
-    private DefaultTableModel tabel_gaji;
+    private DefaultTableModel tabel_users;
     private String SQL;
     
-     public void tampilData(String keyword) {
-         
-    tabel_gaji = new DefaultTableModel();
-    tabel_gaji.addColumn("No");
-    tabel_gaji.addColumn("Nama");
-    tabel_gaji.addColumn("NIP");
-    tabel_gaji.addColumn("Pangkat");
-    tabel_gaji.addColumn("Jabatan");
-    tabel_gaji.addColumn("Bulan Kenaikan");
-    tabel_gajiform.setModel(tabel_gaji);
-    
-    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tabel_gaji);
-    tabel_gajiform.setRowSorter(sorter);
+public void tampilData(String keyword) {
 
-    java.sql.Connection conn = new koneksi().connect();
-    try{
-        String sql;
-        PreparedStatement stmt;
-        if (keyword.isEmpty()) {
-                sql = "SELECT pegawai.nama, pegawai.nip, pangkat.pangkat, pegawai.jabatan, gaji.kenaikan AS bulan_kenaikan " +
-                  "FROM gaji " +
-                  "JOIN pegawai ON gaji.nip_pegawai = pegawai.nip " +
-                  "JOIN pangkat ON gaji.id_pangkat = pangkat.id_pangkat";
+    tabel_users = new DefaultTableModel();
+    tabel_users.addColumn("No");
+    tabel_users.addColumn("Username");
+    tabel_gajiform.setModel(tabel_users);
 
-                stmt = conn.prepareStatement(sql);
-            } else {
-                sql = "SELECT pegawai.nama, pegawai.nip, pangkat.pangkat, pegawai.jabatan, gaji.kenaikan AS bulan_kenaikan " +
-                  "FROM gaji " +
-                  "JOIN pegawai ON gaji.nip_pegawai = pegawai.nip " +
-                  "JOIN pangkat ON gaji.id_pangkat = pangkat.id_pangkat " +
-                  "WHERE pegawai.nama LIKE ?";
+    Connection conn = new koneksi().connect();
 
-;
-                stmt = conn.prepareStatement(sql);
-                stmt.setString(1, "%" + keyword + "%");
-            }
+try {
+    String sql = "SELECT username FROM users WHERE role = 'admin'";
+    PreparedStatement pst = conn.prepareStatement(sql);
+    ResultSet rs = pst.executeQuery();
 
-            ResultSet res = stmt.executeQuery();
-            int no = 1;
-            while (res.next()) {
-                tabel_gaji.addRow(new Object[]{
-                no++,
-                res.getString("nama"),
-                res.getString("nip"),
-                res.getString("pangkat"),
-                res.getString("jabatan"),
-                res.getString("bulan_kenaikan")
-                });
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage());
-        }
-     }
+    int no = 1;
+    while (rs.next()) {
+        tabel_users.addRow(new Object[]{
+            no++,
+            rs.getString("username")
+        });
+    }
 
-    public formtabelpegawai() {
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(this, e.getMessage());
+}
+
+}
+
+    public formtabelpegawaiadmin() {
     initComponents();
     
     getContentPane().setComponentZOrder(jLabel1, getContentPane().getComponentCount()-1);
+    jButton3.addActionListener(evt -> jButton3ActionPerformed(evt));
 
     // frame
     setTitle("Data Kenaikan Gaji Pegawai");
@@ -115,7 +90,6 @@ public class formtabelpegawai extends javax.swing.JFrame {
 
     // tombol  
     styleButton(jButton1, new Color(34,197,94));
-    styleButton(jButton2, new Color(234,179,8));
     styleButton(jButton3, new Color(22, 101, 52));
     styleButton(jButton4, new Color(239,68,68)); 
 
@@ -151,12 +125,8 @@ private void konfigurasiSeleksiTabel() {
 }
 
 private void konfigurasiKolom() {
-    tabel_gajiform.getColumnModel().getColumn(0).setPreferredWidth(40);  // No
-    tabel_gajiform.getColumnModel().getColumn(1).setPreferredWidth(200); // Nama
-    tabel_gajiform.getColumnModel().getColumn(2).setPreferredWidth(120); // NIP
-    tabel_gajiform.getColumnModel().getColumn(3).setPreferredWidth(180); // Pangkat
-    tabel_gajiform.getColumnModel().getColumn(4).setPreferredWidth(160); // Jabatan
-    tabel_gajiform.getColumnModel().getColumn(5).setPreferredWidth(140); // Bulan
+    tabel_gajiform.getColumnModel().getColumn(0).setPreferredWidth(60);   // No
+    tabel_gajiform.getColumnModel().getColumn(1).setPreferredWidth(300);  // Username
 }
 
 // Tidak bisa edit tabel di dalam tabel
@@ -270,7 +240,6 @@ private void styleTable() {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel_gajiform = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         fieldcari = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
@@ -294,95 +263,95 @@ private void styleTable() {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Nirmala UI", 0, 24)); // NOI18N
-        jLabel4.setText("Data Kenaikan Gaji");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, -1, -1));
+        jLabel4.setText("Data Pegawai Admin");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 190, -1, -1));
 
         tabel_gajiform.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tabel_gajiform.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "No.", "Nama", "NIP", "Jabatan", "Unit Kerja", "Bulan Kenaikan Gaji"
+                "No.", "Username"
             }
         ));
         tabel_gajiform.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -392,34 +361,25 @@ private void styleTable() {
         });
         jScrollPane1.setViewportView(tabel_gajiform);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 930, 250));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 280, 610, 250));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton1.setText("Tambah Data");
+        jButton1.setText("Kembali");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 550, 160, -1));
-
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton2.setText("Edit Data");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 550, 130, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 540, 120, -1));
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton3.setText("Tabel Admin");
+        jButton3.setText("Tambah Admin");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 550, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 540, -1, -1));
 
         fieldcari.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         fieldcari.addActionListener(new java.awt.event.ActionListener() {
@@ -427,17 +387,17 @@ private void styleTable() {
                 fieldcariActionPerformed(evt);
             }
         });
-        getContentPane().add(fieldcari, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 250, 200, -1));
+        getContentPane().add(fieldcari, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 240, 200, -1));
 
         jButton4.setBackground(new java.awt.Color(255, 0, 0));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton4.setText("Hapus");
+        jButton4.setText("Hapus Admin");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 550, 130, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 540, 170, -1));
 
         Logo_Tanjungpinang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Lambang_Kota_Tanjungpinang.png"))); // NOI18N
         getContentPane().add(Logo_Tanjungpinang, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 20, 100, 110));
@@ -454,7 +414,8 @@ private void styleTable() {
     }//GEN-LAST:event_fieldcariActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new formtambahdata().setVisible(true);
+        new formtabelpegawai().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -465,99 +426,33 @@ private void styleTable() {
 
     }//GEN-LAST:event_tabel_gajiformMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-int row = tabel_gajiform.getSelectedRow();
-
-if (row == -1) {
-    JOptionPane.showMessageDialog(
-        this,
-        "Silakan pilih data yang ingin diedit!",
-        "Peringatan",
-        JOptionPane.WARNING_MESSAGE
-    );
-    return;
-}   {
-    String nama = tabel_gajiform.getValueAt(row, 1).toString();
-    String nip = tabel_gajiform.getValueAt(row, 2).toString();
-    String pangkat = tabel_gajiform.getValueAt(row, 3).toString();
-    String jabatan = tabel_gajiform.getValueAt(row, 4).toString();
-
-    // ambil kolom bulan_kenaikan (format DATE dari database)
-    String tanggalStr = tabel_gajiform.getValueAt(row, 5).toString(); // contoh: "2025-12-01"
-
-    // parsing ke LocalDate
-    LocalDate date = LocalDate.parse(tanggalStr); 
-    int bulan = date.getMonthValue(); // 1–12
-    int tahun = date.getYear();
-
-    // konversi angka bulan ke nama bulan
-    String bulanStr = "";
-    switch (bulan) {
-        case 1: bulanStr = "Januari"; break;
-        case 2: bulanStr = "Februari"; break;
-        case 3: bulanStr = "Maret"; break;
-        case 4: bulanStr = "April"; break;
-        case 5: bulanStr = "Mei"; break;
-        case 6: bulanStr = "Juni"; break;
-        case 7: bulanStr = "Juli"; break;
-        case 8: bulanStr = "Agustus"; break;
-        case 9: bulanStr = "September"; break;
-        case 10: bulanStr = "Oktober"; break;
-        case 11: bulanStr = "November"; break;
-        case 12: bulanStr = "Desember"; break;
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    int row = tabel_gajiform.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Pilih admin terlebih dahulu");
+        return;
     }
 
-    // kirim ke form edit
-    formeditdata editForm = new formeditdata(nama, nip, pangkat, jabatan, bulanStr, String.valueOf(tahun));
-    editForm.setVisible(true);
-    tabel_gajiform.clearSelection();
+    String username = tabel_gajiform.getValueAt(row, 1).toString();
 
-}
+    try {
+        Connection conn = new koneksi().connect();
+        String sql = "DELETE FROM users WHERE username=? AND role='admin'";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, username);
+        pst.executeUpdate();
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+        JOptionPane.showMessageDialog(this, "Admin berhasil dihapus");
+        tampilData();
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-    java.sql.Connection conn = new koneksi().connect();
-    int row = tabel_gajiform.getSelectedRow();
-
-if (row == -1) {
-    JOptionPane.showMessageDialog(
-        this,
-        "Pilih data yang ingin dihapus!",
-        "Peringatan",
-        JOptionPane.WARNING_MESSAGE
-    );
-    return;
-}
-    UIManager.put("OptionPane.messageFont", new Font("Segoe UI", Font.PLAIN, 14));
-    UIManager.put("OptionPane.buttonFont", new Font("Segoe UI", Font.BOLD, 13));
-
-    int ok = JOptionPane.showConfirmDialog(
-        this,
-        "Yakin ingin menghapus data pegawai?",
-        "Konfirmasi",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.WARNING_MESSAGE
-    );
-
-    if(ok==0){
-        try{
-            SQL="delete from kenaikan_gaji where nip_pegawai='"+tabel_gajiform.getValueAt(row, 2).toString()+"'";
-            java.sql.PreparedStatement stmt = conn.prepareStatement(SQL);
-            stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Data Berhasil di Hapus");
-            tampilData("");
-            tabel_gajiform.clearSelection();
-
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null,"Data Gagal Di Hapus");
-        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
     }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new tabelpegawaiadmin.formtabelpegawaiadmin().setVisible(true);
-        dispose();
+    new formtambahadmin().setVisible(true);
+    dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -567,7 +462,7 @@ if (row == -1) {
     com.formdev.flatlaf.FlatLightLaf.setup();
 
     java.awt.EventQueue.invokeLater(() -> {
-        new formtabelpegawai().setVisible(true);
+        new formtabelpegawaiadmin().setVisible(true);
     });
 }
 
@@ -575,7 +470,6 @@ if (row == -1) {
     private javax.swing.JLabel Logo_Tanjungpinang;
     private javax.swing.JTextField fieldcari;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
@@ -585,4 +479,8 @@ if (row == -1) {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabel_gajiform;
     // End of variables declaration//GEN-END:variables
+
+    private void tampilData() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -185,12 +185,12 @@ private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
                 .addComponent(jLabel7)
                 .addGap(26, 26, 26)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 630, 330));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 630, 400));
 
         jButton3.setBackground(java.awt.Color.red);
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -200,7 +200,7 @@ private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 510, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 550, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Nirmala UI", 1, 30)); // NOI18N
         jLabel4.setText("TANJUNGPINANG");
@@ -217,12 +217,72 @@ private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    new formtabelpegawai().setVisible(true);
+    new tabelpegawaiadmin.formtabelpegawaiadmin().setVisible(true);
             dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    String username = usernameField.getText().trim();
+    String password = passwordField.getText().trim();
 
+    // validasi
+    if (username.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Username dan Password tidak boleh kosong!",
+            "Peringatan",
+            JOptionPane.WARNING_MESSAGE
+        );
+        return;
+    }
+
+    try {
+        Connection conn = new koneksi().connect();
+
+        // cek username sudah ada atau belum
+        String cekSql = "SELECT * FROM users WHERE username=?";
+        PreparedStatement cekStmt = conn.prepareStatement(cekSql);
+        cekStmt.setString(1, username);
+        ResultSet rs = cekStmt.executeQuery();
+
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Username sudah digunakan!",
+                "Gagal",
+                JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // simpan admin
+        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, username);
+        stmt.setString(2, password); // (nanti bisa di-hash)
+        stmt.setString(3, "admin");
+
+        stmt.executeUpdate();
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Admin berhasil ditambahkan!",
+            "Sukses",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+
+        // reset field
+        usernameField.setText("");
+        passwordField.setText("");
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Gagal menyimpan admin: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
