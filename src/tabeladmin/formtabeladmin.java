@@ -1,4 +1,4 @@
-package tabelpegawaiadmin;
+package tabeladmin;
 
 import tabelpegawai.*;
 import javax.swing.ImageIcon;
@@ -14,7 +14,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class formtabelpegawaiadmin extends javax.swing.JFrame {
+public class formtabeladmin extends javax.swing.JFrame {
     
     private JTextField field_cari;
     private DefaultTableModel tabel_users;
@@ -25,7 +25,7 @@ public void tampilData(String keyword) {
     tabel_users = new DefaultTableModel();
     tabel_users.addColumn("No");
     tabel_users.addColumn("Username");
-    tabel_gajiform.setModel(tabel_users);
+    tabel_adminform.setModel(tabel_users);
 
     Connection conn = new koneksi().connect();
 
@@ -48,7 +48,7 @@ try {
 
 }
 
-    public formtabelpegawaiadmin() {
+    public formtabeladmin() {
     initComponents();
     
     getContentPane().setComponentZOrder(jLabel1, getContentPane().getComponentCount()-1);
@@ -71,7 +71,7 @@ try {
     // field pencarian
     fieldcari.putClientProperty(
         "JTextField.placeholderText",
-        "Cari nama pegawai..."
+        "Cari admin..."
     );
     fieldcari.putClientProperty(
         "FlatLaf.style",
@@ -81,9 +81,9 @@ try {
     jLabel1.addMouseListener(new MouseAdapter() {
     @Override
     public void mousePressed(MouseEvent e) {
-        int row = tabel_gajiform.rowAtPoint(e.getPoint());
+        int row = tabel_adminform.rowAtPoint(e.getPoint());
         if (row == -1) {
-            tabel_gajiform.clearSelection();
+            tabel_adminform.clearSelection();
         }
     }
 });
@@ -115,23 +115,23 @@ try {
 }
     
 private void konfigurasiSeleksiTabel() {
-    tabel_gajiform.setDragEnabled(false);
-    tabel_gajiform.setCellSelectionEnabled(false);
-    tabel_gajiform.setRowSelectionAllowed(true);
-    tabel_gajiform.setColumnSelectionAllowed(false);
-    tabel_gajiform.setFocusable(true);
-    tabel_gajiform.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    tabel_adminform.setDragEnabled(false);
+    tabel_adminform.setCellSelectionEnabled(false);
+    tabel_adminform.setRowSelectionAllowed(true);
+    tabel_adminform.setColumnSelectionAllowed(false);
+    tabel_adminform.setFocusable(true);
+    tabel_adminform.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 }
 
 private void konfigurasiKolom() {
-    tabel_gajiform.getColumnModel().getColumn(0).setPreferredWidth(60);   // No
-    tabel_gajiform.getColumnModel().getColumn(1).setPreferredWidth(300);  // Username
+    tabel_adminform.getColumnModel().getColumn(0).setPreferredWidth(60);   // No
+    tabel_adminform.getColumnModel().getColumn(1).setPreferredWidth(300);  // Username
 }
 
 // Tidak bisa edit tabel di dalam tabel
 private void nonEditableTable() {
-    tabel_gajiform.setDefaultEditor(Object.class, null);
+    tabel_adminform.setDefaultEditor(Object.class, null);
 }
 
 // Warna Tabel
@@ -151,20 +151,20 @@ private void styleButton(JButton btn, Color color) {
 private void styleTable() {
 
     // Font & tinggi baris
-    tabel_gajiform.setRowHeight(38);
-    tabel_gajiform.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-    tabel_gajiform.setBackground(Color.WHITE);
+    tabel_adminform.setRowHeight(38);
+    tabel_adminform.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+    tabel_adminform.setBackground(Color.WHITE);
 
     // warna seleksi
-    tabel_gajiform.setSelectionBackground(new Color(14, 165, 233));
-    tabel_gajiform.setSelectionForeground(Color.WHITE);
+    tabel_adminform.setSelectionBackground(new Color(14, 165, 233));
+    tabel_adminform.setSelectionForeground(Color.WHITE);
 
     // grid
-    tabel_gajiform.setShowGrid(true);
-    tabel_gajiform.setGridColor(new Color(220, 230, 240));
+    tabel_adminform.setShowGrid(true);
+    tabel_adminform.setGridColor(new Color(220, 230, 240));
 
     // header
-    JTableHeader header = tabel_gajiform.getTableHeader();
+    JTableHeader header = tabel_adminform.getTableHeader();
     header.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
     header.setBackground(new Color(22, 101, 52));
     header.setForeground(Color.WHITE);
@@ -203,8 +203,8 @@ private void styleTable() {
     };
 
     // Terapkan renderer ke semua kolom
-    for (int i = 0; i < tabel_gajiform.getColumnCount(); i++) {
-        tabel_gajiform.getColumnModel().getColumn(i).setCellRenderer(zebraRenderer);
+    for (int i = 0; i < tabel_adminform.getColumnCount(); i++) {
+        tabel_adminform.getColumnModel().getColumn(i).setCellRenderer(zebraRenderer);
     }
 }
     
@@ -238,7 +238,7 @@ private void styleTable() {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabel_gajiform = new javax.swing.JTable();
+        tabel_adminform = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         fieldcari = new javax.swing.JTextField();
@@ -266,8 +266,8 @@ private void styleTable() {
         jLabel4.setText("Data Pegawai Admin");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 190, -1, -1));
 
-        tabel_gajiform.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        tabel_gajiform.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_adminform.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tabel_adminform.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -354,12 +354,12 @@ private void styleTable() {
                 "No.", "Username"
             }
         ));
-        tabel_gajiform.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabel_adminform.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabel_gajiformMouseClicked(evt);
+                tabel_adminformMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tabel_gajiform);
+        jScrollPane1.setViewportView(tabel_adminform);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 280, 610, 250));
 
@@ -422,31 +422,46 @@ private void styleTable() {
         tampilData("");
     }//GEN-LAST:event_formWindowOpened
 
-    private void tabel_gajiformMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_gajiformMouseClicked
+    private void tabel_adminformMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_adminformMouseClicked
 
-    }//GEN-LAST:event_tabel_gajiformMouseClicked
+    }//GEN-LAST:event_tabel_adminformMouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-    int row = tabel_gajiform.getSelectedRow();
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Pilih admin terlebih dahulu");
-        return;
-    }
+    java.sql.Connection conn = new koneksi().connect();
+    int row = tabel_adminform.getSelectedRow();
 
-    String username = tabel_gajiform.getValueAt(row, 1).toString();
+if (row == -1) {
+    JOptionPane.showMessageDialog(
+        this,
+        "Pilih data yang ingin dihapus!",
+        "Peringatan",
+        JOptionPane.WARNING_MESSAGE
+    );
+    return;
+}
+    UIManager.put("OptionPane.messageFont", new Font("Segoe UI", Font.PLAIN, 14));
+    UIManager.put("OptionPane.buttonFont", new Font("Segoe UI", Font.BOLD, 13));
 
-    try {
-        Connection conn = new koneksi().connect();
-        String sql = "DELETE FROM users WHERE username=? AND role='admin'";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, username);
-        pst.executeUpdate();
+    int ok = JOptionPane.showConfirmDialog(
+        this,
+        "Yakin ingin menghapus data admin?",
+        "Konfirmasi",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.WARNING_MESSAGE
+    );
 
-        JOptionPane.showMessageDialog(this, "Admin berhasil dihapus");
-        tampilData();
+    if(ok==0){
+        try{
+            SQL="delete from users where username='"+tabel_adminform.getValueAt(row, 1).toString()+"'";
+            java.sql.PreparedStatement stmt = conn.prepareStatement(SQL);
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Data Berhasil di Hapus");
+            tampilData("");
+            tabel_adminform.clearSelection();
 
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,"Data Gagal Di Hapus");
+        }
     }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -462,7 +477,7 @@ private void styleTable() {
     com.formdev.flatlaf.FlatLightLaf.setup();
 
     java.awt.EventQueue.invokeLater(() -> {
-        new formtabelpegawaiadmin().setVisible(true);
+        new formtabeladmin().setVisible(true);
     });
 }
 
@@ -477,7 +492,7 @@ private void styleTable() {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabel_gajiform;
+    private javax.swing.JTable tabel_adminform;
     // End of variables declaration//GEN-END:variables
 
     private void tampilData() {

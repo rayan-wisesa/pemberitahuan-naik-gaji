@@ -556,7 +556,7 @@ if (row == -1) {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new tabelpegawaiadmin.formtabelpegawaiadmin().setVisible(true);
+        new tabeladmin.formtabeladmin().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 

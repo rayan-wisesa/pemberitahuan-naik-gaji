@@ -1,23 +1,38 @@
-package tabelpegawai;
+package tabeladmin;
 import javax.swing.*;
 import java.awt.Image; 
 import java.awt.Color;
 import java.awt.Font;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import tabelpegawai.koneksi;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import java.time.LocalDate;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.util.Map;
-import java.util.HashMap;
+import tabelpegawai.koneksi;
+
 
 public class formtambahadmin extends javax.swing.JFrame {
 
     private String SQL;
+    
+    private String hashPassword(String password) {
+    try {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hashedBytes = md.digest(password.getBytes());
+
+        // ubah byte ke hex string
+        StringBuilder sb = new StringBuilder();
+        for (byte b : hashedBytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    } catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException("Error hashing password", e);
+    }
+}
     
     public formtambahadmin() {
         initComponents();
@@ -117,8 +132,8 @@ private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
         jLabel6 = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        passwordField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        passwordField = new javax.swing.JPasswordField();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -156,21 +171,21 @@ private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 513, Short.MAX_VALUE))
-                    .addComponent(usernameField)
-                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(336, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(215, 215, 215))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(passwordField)
+                    .addComponent(usernameField)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,11 +198,11 @@ private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
                 .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
-                .addGap(26, 26, 26)
-                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 630, 400));
@@ -217,71 +232,55 @@ private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    new tabelpegawaiadmin.formtabelpegawaiadmin().setVisible(true);
+    new tabeladmin.formtabeladmin().setVisible(true);
             dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String username = usernameField.getText().trim();
-    String password = passwordField.getText().trim();
-
-    // validasi
-    if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(
-            this,
-            "Username dan Password tidak boleh kosong!",
+                                        
+    String user = usernameField.getText().trim();
+    String pass = new String(passwordField.getPassword()).trim();
+    java.sql.Connection conn = new koneksi().connect();
+    
+    if (user.isEmpty() || pass.isEmpty()) {
+        JOptionPane.showMessageDialog(this,
+            "Username dan Password wajib diisi",
             "Peringatan",
-            JOptionPane.WARNING_MESSAGE
-        );
+            JOptionPane.WARNING_MESSAGE);
         return;
     }
 
+    // Hash password sebelum disimpan
+    String hashedPass = hashPassword(pass);
+
+    PreparedStatement pst = null;
+
     try {
-        Connection conn = new koneksi().connect();
-
-        // cek username sudah ada atau belum
-        String cekSql = "SELECT * FROM users WHERE username=?";
-        PreparedStatement cekStmt = conn.prepareStatement(cekSql);
-        cekStmt.setString(1, username);
-        ResultSet rs = cekStmt.executeQuery();
-
-        if (rs.next()) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Username sudah digunakan!",
-                "Gagal",
-                JOptionPane.ERROR_MESSAGE
-            );
-            return;
+        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, 'admin')";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, user);
+        pst.setString(2, hashedPass);
+        
+        int rows = pst.executeUpdate();
+        if (rows > 0) {
+            JOptionPane.showMessageDialog(this,
+                "Penambahan Admin Berhasil",
+                "Informasi",
+                JOptionPane.INFORMATION_MESSAGE);
         }
 
-        // simpan admin
-        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1, username);
-        stmt.setString(2, password); // (nanti bisa di-hash)
-        stmt.setString(3, "admin");
-
-        stmt.executeUpdate();
-
-        JOptionPane.showMessageDialog(
-            this,
-            "Admin berhasil ditambahkan!",
-            "Sukses",
-            JOptionPane.INFORMATION_MESSAGE
-        );
-
-        // reset field
-        usernameField.setText("");
-        passwordField.setText("");
-
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(
-            this,
-            "Gagal menyimpan admin: " + e.getMessage(),
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "Terjadi kesalahan: " + e.getMessage(),
             "Error",
-            JOptionPane.ERROR_MESSAGE
-        );
+            JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (pst != null) pst.close();
+            if (conn != null) conn.close();
+        } catch (Exception ex) {
+            // abaikan
+        }
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -306,7 +305,7 @@ private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }
