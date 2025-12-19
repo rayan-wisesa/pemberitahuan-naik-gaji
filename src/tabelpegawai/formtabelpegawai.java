@@ -542,7 +542,7 @@ if (row == -1) {
 
     if(ok==0){
         try{
-            SQL="delete from kenaikan_gaji where nip_pegawai='"+tabel_gajiform.getValueAt(row, 2).toString()+"'";
+            SQL="delete from pegawai where nip='"+tabel_gajiform.getValueAt(row, 2).toString()+"'";
             java.sql.PreparedStatement stmt = conn.prepareStatement(SQL);
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null,"Data Berhasil di Hapus");
