@@ -66,9 +66,9 @@ public class formtambahdata extends javax.swing.JFrame {
         int tinggiLogo = 120; 
         
         tampilkanGambar(Logo_Tanjungpinang, pathLogo, lebarLogo, tinggiLogo);
-        this.setSize(1300, 750);   // sesuaikan dengan ukuran desain
-    this.setLocationRelativeTo(null); // agar muncul di tengah layar
-    this.setResizable(false);
+        this.setSize(1300, 750);   // Mengatur ukuran aplikasi
+        this.setLocationRelativeTo(null); // Supaya aplikasi muncul di tengah layar
+        this.setResizable(false); // Supaya user tidak dapat meresize aplikasi
     
     int currentYear = java.time.Year.now().getValue();
     for (int i = currentYear; i <= currentYear + 10; i++) {
@@ -94,6 +94,7 @@ private Map<String, Integer> pangkatMap = new HashMap<>();
     
 
 private void loadPangkatComboBox() {
+    // Load isi dari tabel pangkat untuk ditampilkan di combobox
     try {
         Connection conn = new koneksi().connect();
         PreparedStatement stmt = conn.prepareStatement("SELECT id_pangkat, pangkat FROM pangkat ORDER BY pangkat");
@@ -109,7 +110,7 @@ private void loadPangkatComboBox() {
             String namaPangkat = rs.getString("pangkat");
 
             comboboxpangkat.addItem(namaPangkat);   // tampilkan hanya nama
-            pangkatMap.put(namaPangkat, idPangkat); // simpan mapping nama → id
+            pangkatMap.put(namaPangkat, idPangkat); // simpan mapping nama ke id
         }
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Gagal load data pangkat: " + ex.getMessage());
@@ -117,6 +118,7 @@ private void loadPangkatComboBox() {
 }
 
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
+        // Menampilkan gambar logo
         try {
             java.net.URL imageUrl = getClass().getResource(pathGambar);
 
@@ -313,43 +315,44 @@ private void loadPangkatComboBox() {
     }//GEN-LAST:event_comboboxpangkatActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    new formtabelpegawai().setVisible(true);
+    // Pindah ke halaman tabel pegawai
+        new formtabelpegawai().setVisible(true);
             dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
                                        
 
-    int tanggal = 1;
-    String bulanStr = combobulan.getSelectedItem().toString();
-
+int tanggal = 1;
+String bulanStr = combobulan.getSelectedItem().toString();
+    
     if (bulanStr.equals("--Pilih Bulan--")) {
         JOptionPane.showMessageDialog(null, "Silakan pilih bulan terlebih dahulu!");
-        return; // hentikan proses insert
+        return; // Menghentikan proses insert
     }
 
     String pangkatStr = comboboxpangkat.getSelectedItem().toString();
-if (pangkatStr.equals("--Pilih Pangkat--")) {
-    JOptionPane.showMessageDialog(this, "Silakan pilih pangkat terlebih dahulu!");
-    return;
-}
-int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
-
-    int bulan = 0;
-    switch (bulanStr) {
-        case "Januari": bulan = 1; break;
-        case "Februari": bulan = 2; break;
-        case "Maret": bulan = 3; break;
-        case "April": bulan = 4; break;
-        case "Mei": bulan = 5; break;
-        case "Juni": bulan = 6; break;
-        case "Juli": bulan = 7; break;
-        case "Agustus": bulan = 8; break;
-        case "September": bulan = 9; break;
-        case "Oktober": bulan = 10; break;
-        case "November": bulan = 11; break;
-        case "Desember": bulan = 12; break;
+    if (pangkatStr.equals("--Pilih Pangkat--")) {
+        JOptionPane.showMessageDialog(this, "Silakan pilih pangkat terlebih dahulu!");
+        return;
     }
+    int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
+
+        int bulan = 0;
+        switch (bulanStr) {
+            case "Januari": bulan = 1; break;
+            case "Februari": bulan = 2; break;
+            case "Maret": bulan = 3; break;
+            case "April": bulan = 4; break;
+            case "Mei": bulan = 5; break;
+            case "Juni": bulan = 6; break;
+            case "Juli": bulan = 7; break;
+            case "Agustus": bulan = 8; break;
+            case "September": bulan = 9; break;
+            case "Oktober": bulan = 10; break;
+            case "November": bulan = 11; break;
+            case "Desember": bulan = 12; break;
+        }
 
     int tahun = Integer.parseInt(combotahun.getSelectedItem().toString());
 
@@ -359,14 +362,14 @@ int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
     try {
         Connection conn = new koneksi().connect();
 
-        // 1. Simpan data pegawai jika belum ada
+        // Menyimpan pegawai jika belum ada
         PreparedStatement checkPegawai = conn.prepareStatement(
             "SELECT nip FROM pegawai WHERE nip = ?"
         );
         checkPegawai.setString(1, nip_field.getText());
         ResultSet rs = checkPegawai.executeQuery();
 
-        if (!rs.next()) { // kalau belum ada, insert
+        if (!rs.next()) { // Insert jika belum ada
             PreparedStatement stmtPegawai = conn.prepareStatement(
                 "INSERT INTO pegawai (nip, nama, jabatan) VALUES (?, ?, ?)"
             );
@@ -376,7 +379,7 @@ int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
             stmtPegawai.executeUpdate();
         }
 
-        // 2. Simpan data ke tabel gaji
+        // Menyimpan data kedalam tabel gaji
         PreparedStatement stmtGaji = conn.prepareStatement(
             "INSERT INTO gaji (nip_pegawai, id_pangkat, kenaikan) VALUES (?, ?, ?)"
         );
@@ -401,9 +404,9 @@ int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
 
     }//GEN-LAST:event_combotahunActionPerformed
     
-public static class PangkatItem {
-    public final int idPangkat;
-    public final String pangkat;
+    public static class PangkatItem {
+        public final int idPangkat;
+        public final String pangkat;
 
     public PangkatItem(int idPangkat, String pangkat) {
         this.idPangkat = idPangkat;

@@ -36,45 +36,45 @@ public class formtambahadmin extends javax.swing.JFrame {
     
     public formtambahadmin() {
         initComponents();
-        
-    // Placeholder
-    usernameField.putClientProperty(
-    "JTextField.placeholderText", "Masukkan username"
-);
 
-    passwordField.putClientProperty(
-    "JTextField.placeholderText", "Masukkan password"
-);
+        // Placeholder
+        usernameField.putClientProperty(
+        "JTextField.placeholderText", "Masukkan username"
+    );
 
-    jPanel1.putClientProperty(
-    "FlatLaf.style",
-    "arc:25; background:#ffffff"
-);
-    jPanel1.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-    
-    usernameField.putClientProperty(
-    "JTextField.placeholderText", "Masukkan username admin"
-);
-    passwordField.putClientProperty(
-    "JTextField.placeholderText", "Masukkan password"
-);
-    
-    // Label
-    jLabel6.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
-    jLabel7.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        passwordField.putClientProperty(
+        "JTextField.placeholderText", "Masukkan password"
+    );
 
-    // Input
-    usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-    passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        jPanel1.putClientProperty(
+        "FlatLaf.style",
+        "arc:25; background:#ffffff"
+    );
+        jPanel1.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+
+        usernameField.putClientProperty(
+        "JTextField.placeholderText", "Masukkan username admin"
+    );
+        passwordField.putClientProperty(
+        "JTextField.placeholderText", "Masukkan password"
+    );
+
+        // Label
+        jLabel6.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        jLabel7.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+
+        // Input
+        usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 
 
-    usernameField.putClientProperty("FlatLaf.style", "arc:14");
-    passwordField.putClientProperty("FlatLaf.style", "arc:14");
+        usernameField.putClientProperty("FlatLaf.style", "arc:14");
+        passwordField.putClientProperty("FlatLaf.style", "arc:14");
 
-    styleButton(jButton1, new Color(22, 163, 74)); 
-    jButton1.setText("SIMPAN ADMIN");
-    styleButton(jButton3, new Color(239, 68, 68)); 
-    jButton3.setText("KEMBALI");
+        styleButton(jButton1, new Color(22, 163, 74)); 
+        jButton1.setText("SIMPAN ADMIN");
+        styleButton(jButton3, new Color(239, 68, 68)); 
+        jButton3.setText("KEMBALI");
 
         
         jLabel1.setBounds(0, 0, getWidth(), getHeight());
