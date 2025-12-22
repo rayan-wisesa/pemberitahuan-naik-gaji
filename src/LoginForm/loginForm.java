@@ -93,7 +93,9 @@ public class loginForm extends javax.swing.JFrame {
 
         getRootPane().putClientProperty("JComponent.arc", 20);
         
-        setLocationRelativeTo(null);  // tengah layar
+        this.setSize(1300, 750);   // Mengatur ukuran aplikasi
+        this.setLocationRelativeTo(null); // Supaya aplikasi muncul di tengah layar
+        this.setResizable(false); // Supaya user tidak dapat meresize aplikasi
         
         getRootPane().setBorder(
         javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 12)
