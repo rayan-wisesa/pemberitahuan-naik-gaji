@@ -76,6 +76,13 @@ public class formtabelpegawaivisitor extends javax.swing.JFrame {
 
 public formtabelpegawaivisitor() {
     initComponents();
+    
+    jScrollPane1.setHorizontalScrollBarPolicy(
+    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+);
+    jScrollPane1.setVerticalScrollBarPolicy(
+    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+);
 
     setTitle("Data Kenaikan Gaji Pegawai");
     setSize(1245, 690);
@@ -92,9 +99,18 @@ public formtabelpegawaivisitor() {
     konfigurasiTabel();     // styling + behavior tabel
     konfigurasiPencarian(); // search
     nonEditableTable();     // read-only
-
+    konfigurasiKolom();
     tampilData("");
 
+}
+
+private void konfigurasiKolom() {
+    tabel_gajiform.getColumnModel().getColumn(0).setPreferredWidth(40);
+    tabel_gajiform.getColumnModel().getColumn(1).setPreferredWidth(220);
+    tabel_gajiform.getColumnModel().getColumn(2).setPreferredWidth(180);
+    tabel_gajiform.getColumnModel().getColumn(3).setPreferredWidth(300);
+    tabel_gajiform.getColumnModel().getColumn(4).setPreferredWidth(200);
+    tabel_gajiform.getColumnModel().getColumn(5).setPreferredWidth(160);
 }
 
 private void nonEditableTable() {
@@ -342,7 +358,7 @@ private void styleButton(JButton btn, Color color) {
         });
         jScrollPane1.setViewportView(tabel_gajiform);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 930, 250));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 1150, 250));
 
         fieldcari.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         fieldcari.addActionListener(new java.awt.event.ActionListener() {

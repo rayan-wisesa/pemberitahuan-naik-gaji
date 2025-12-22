@@ -59,15 +59,16 @@ public class formtabelpegawai extends javax.swing.JFrame {
             ResultSet res = stmt.executeQuery();
             int no = 1;
             while (res.next()) {
-                tabel_gaji.addRow(new Object[]{
-                no++,
-                res.getString("nama"),
-                res.getString("nip"),
-                res.getString("pangkat"),
-                res.getString("jabatan"),
-                res.getString("bulan_kenaikan")
-                });
-            }
+    tabel_gaji.addRow(new Object[]{
+        no++,
+        res.getString("nama"),
+        res.getString("nip"),
+        res.getString("pangkat"),
+        res.getString("jabatan"),
+        res.getString("bulan_kenaikan")
+    });
+}
+konfigurasiKolom();
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage());
@@ -77,8 +78,17 @@ public class formtabelpegawai extends javax.swing.JFrame {
     public formtabelpegawai() {
     initComponents();
     
-    getContentPane().setComponentZOrder(jLabel1, getContentPane().getComponentCount()-1);
+    tabel_gajiform.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+    jScrollPane1.setHorizontalScrollBarPolicy(
+    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+);
+    jScrollPane1.setVerticalScrollBarPolicy(
+    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+);
+    
+    getContentPane().setComponentZOrder(jLabel1, getContentPane().getComponentCount()-1);
+    
     // frame
     setTitle("Data Kenaikan Gaji Pegawai");
     setSize(1245, 690);
@@ -123,7 +133,8 @@ public class formtabelpegawai extends javax.swing.JFrame {
     styleTable();
     nonEditableTable();          
     konfigurasiSeleksiTabel();   
-    konfigurasiKolom();        
+    konfigurasiKolom();  
+    aktifkanWrapText();
     
     // fitur enter untuk cari
     fieldcari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -151,12 +162,12 @@ private void konfigurasiSeleksiTabel() {
 }
 
 private void konfigurasiKolom() {
-    tabel_gajiform.getColumnModel().getColumn(0).setPreferredWidth(40);  // No
-    tabel_gajiform.getColumnModel().getColumn(1).setPreferredWidth(200); // Nama
-    tabel_gajiform.getColumnModel().getColumn(2).setPreferredWidth(120); // NIP
-    tabel_gajiform.getColumnModel().getColumn(3).setPreferredWidth(180); // Pangkat
-    tabel_gajiform.getColumnModel().getColumn(4).setPreferredWidth(160); // Jabatan
-    tabel_gajiform.getColumnModel().getColumn(5).setPreferredWidth(140); // Bulan
+    tabel_gajiform.getColumnModel().getColumn(0).setPreferredWidth(40);
+    tabel_gajiform.getColumnModel().getColumn(1).setPreferredWidth(220);
+    tabel_gajiform.getColumnModel().getColumn(2).setPreferredWidth(180);
+    tabel_gajiform.getColumnModel().getColumn(3).setPreferredWidth(300);
+    tabel_gajiform.getColumnModel().getColumn(4).setPreferredWidth(200);
+    tabel_gajiform.getColumnModel().getColumn(5).setPreferredWidth(160);
 }
 
 // Tidak bisa edit tabel di dalam tabel
@@ -181,7 +192,7 @@ private void styleButton(JButton btn, Color color) {
 private void styleTable() {
 
     // Font & tinggi baris
-    tabel_gajiform.setRowHeight(38);
+    tabel_gajiform.setRowHeight(45);
     tabel_gajiform.setFont(new Font("Segoe UI", Font.PLAIN, 15));
     tabel_gajiform.setBackground(Color.WHITE);
 
@@ -236,6 +247,49 @@ private void styleTable() {
     for (int i = 0; i < tabel_gajiform.getColumnCount(); i++) {
         tabel_gajiform.getColumnModel().getColumn(i).setCellRenderer(zebraRenderer);
     }
+}
+
+private void aktifkanWrapText() {
+    DefaultTableCellRenderer wrapRenderer = new DefaultTableCellRenderer() {
+        JTextArea textArea = new JTextArea();
+
+        {
+            textArea.setLineWrap(true);
+            textArea.setWrapStyleWord(true);
+            textArea.setOpaque(true);
+            textArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            textArea.setText(value == null ? "" : value.toString());
+
+            if (isSelected) {
+                textArea.setBackground(table.getSelectionBackground());
+                textArea.setForeground(table.getSelectionForeground());
+            } else {
+                textArea.setBackground(row % 2 == 0
+                        ? new Color(240, 249, 255)
+                        : Color.WHITE);
+                textArea.setForeground(Color.BLACK);
+            }
+
+            // auto tinggi
+            int height = textArea.getPreferredSize().height;
+            if (table.getRowHeight(row) != height) {
+                table.setRowHeight(row, height);
+            }
+
+            return textArea;
+        }
+    };
+
+    // aktifkan wrap
+    tabel_gajiform.getColumnModel().getColumn(3).setCellRenderer(wrapRenderer); 
+    tabel_gajiform.getColumnModel().getColumn(4).setCellRenderer(wrapRenderer); 
 }
     
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
@@ -382,7 +436,7 @@ private void styleTable() {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "Nama", "NIP", "Jabatan", "Unit Kerja", "Bulan Kenaikan Gaji"
+                "No.", "Nama", "NIP", "Pangkat", "Jabatan", "Bulan Kenaikan Gaji"
             }
         ));
         tabel_gajiform.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -392,7 +446,7 @@ private void styleTable() {
         });
         jScrollPane1.setViewportView(tabel_gajiform);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 930, 250));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 1090, 250));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setText("Tambah Data");
@@ -401,7 +455,7 @@ private void styleTable() {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 550, 160, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 160, -1));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("Edit Data");
@@ -410,7 +464,7 @@ private void styleTable() {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 550, 130, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 550, 130, -1));
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton3.setText("Tabel Admin");
@@ -419,7 +473,7 @@ private void styleTable() {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 550, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 550, -1, -1));
 
         fieldcari.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         fieldcari.addActionListener(new java.awt.event.ActionListener() {
@@ -427,7 +481,7 @@ private void styleTable() {
                 fieldcariActionPerformed(evt);
             }
         });
-        getContentPane().add(fieldcari, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 250, 200, -1));
+        getContentPane().add(fieldcari, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 250, 220, -1));
 
         jButton4.setBackground(new java.awt.Color(255, 0, 0));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -513,7 +567,6 @@ if (row == -1) {
     tabel_gajiform.clearSelection();
 
 }
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

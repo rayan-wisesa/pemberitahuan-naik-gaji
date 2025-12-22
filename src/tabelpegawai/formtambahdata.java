@@ -222,6 +222,8 @@ private void loadPangkatComboBox() {
             }
         });
 
+        jabatan_field.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -333,6 +335,31 @@ if (pangkatStr.equals("--Pilih Pangkat--")) {
     JOptionPane.showMessageDialog(this, "Silakan pilih pangkat terlebih dahulu!");
     return;
 }
+
+if (nama_pegawaifield.getText().trim().isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Nama pegawai wajib diisi!");
+    nama_pegawaifield.requestFocus();
+    return;
+}
+
+if (nip_field.getText().trim().isEmpty()) {
+    JOptionPane.showMessageDialog(this, "NIP wajib diisi!");
+    nip_field.requestFocus();
+    return;
+}
+
+if (jabatan_field.getText().trim().isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Jabatan wajib diisi!");
+    jabatan_field.requestFocus();
+    return;
+}
+
+if (!nip_field.getText().matches("\\d+")) {
+    JOptionPane.showMessageDialog(this, "NIP harus berupa angka!");
+    nip_field.requestFocus();
+    return;
+}
+
 int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
 
     int bulan = 0;
