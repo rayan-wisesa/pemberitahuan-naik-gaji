@@ -537,14 +537,15 @@ private void aktifkanWrapText() {
             String pangkat = tabel_gajiform.getValueAt(row, 3).toString();
             String jabatan = tabel_gajiform.getValueAt(row, 4).toString();
 
-            // Mengambil kolom bulan_kenaikan dari database dalam format DATE
-            String tanggalStr = tabel_gajiform.getValueAt(row, 5).toString();
-
+            // ambil kolom bulan_kenaikan (format DATE dari database)
+            String tanggalStr = tabel_gajiform.getValueAt(row, 5).toString(); // contoh: "2025-12-01"
+            
+            // parsing ke LocalDate
             LocalDate date = LocalDate.parse(tanggalStr); 
             int bulan = date.getMonthValue(); // 1–12
             int tahun = date.getYear();
 
-            // Mengubah nomor menjadi bulan
+            // konversi angka bulan ke nama bulan
             String bulanStr = "";
             switch (bulan) {
                 case 1: bulanStr = "Januari"; break;
@@ -565,9 +566,10 @@ private void aktifkanWrapText() {
             formeditdata editForm = new formeditdata(nama, nip, pangkat, jabatan, bulanStr, String.valueOf(tahun));
             editForm.setVisible(true);
             tabel_gajiform.clearSelection();
-
-    }//GEN-LAST:event_jButton2ActionPerformed
+            
     }
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
     java.sql.Connection conn = new koneksi().connect();
     int row = tabel_gajiform.getSelectedRow();
@@ -608,7 +610,6 @@ private void aktifkanWrapText() {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       // Pindah halaman ke form tabel admin
         new tabeladmin.formtabeladmin().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed

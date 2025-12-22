@@ -149,6 +149,7 @@ private void loadPangkatComboBox() {
         nama_pegawaifield = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         nip_field = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         comboboxpangkat = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
@@ -184,6 +185,9 @@ private void loadPangkatComboBox() {
         jLabel7.setText("NIP");
 
         nip_field.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel11.setText("Tahun Kenaikan Gaji");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setText("Pangkat");
@@ -249,7 +253,8 @@ private void loadPangkatComboBox() {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(combotahun, 0, 280, Short.MAX_VALUE)
-                            .addComponent(jabatan_field))))
+                            .addComponent(jabatan_field)
+                            .addComponent(jLabel11))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -273,7 +278,9 @@ private void loadPangkatComboBox() {
                     .addComponent(jabatan_field)
                     .addComponent(comboboxpangkat, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(combobulan, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -465,6 +472,7 @@ int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
