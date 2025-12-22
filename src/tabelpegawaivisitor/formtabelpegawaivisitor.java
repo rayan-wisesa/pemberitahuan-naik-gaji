@@ -33,6 +33,7 @@ public class formtabelpegawaivisitor extends javax.swing.JFrame {
     TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tabel_gaji);
     tabel_gajiform.setRowSorter(sorter);
 
+    // Mengambil data dari database dan ditampilkan ke tabel dengan SQL
     java.sql.Connection conn = new koneksi().connect();
     try{
         String sql;

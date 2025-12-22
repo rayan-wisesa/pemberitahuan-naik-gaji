@@ -293,6 +293,7 @@ private void aktifkanWrapText() {
 }
     
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
+        // Menampilkan gambar logo
         try {
             java.net.URL imageUrl = getClass().getResource(pathGambar);
 
@@ -520,95 +521,94 @@ private void aktifkanWrapText() {
     }//GEN-LAST:event_tabel_gajiformMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-int row = tabel_gajiform.getSelectedRow();
+        int row = tabel_gajiform.getSelectedRow();
 
-if (row == -1) {
-    JOptionPane.showMessageDialog(
-        this,
-        "Silakan pilih data yang ingin diedit!",
-        "Peringatan",
-        JOptionPane.WARNING_MESSAGE
-    );
-    return;
-}   {
-    String nama = tabel_gajiform.getValueAt(row, 1).toString();
-    String nip = tabel_gajiform.getValueAt(row, 2).toString();
-    String pangkat = tabel_gajiform.getValueAt(row, 3).toString();
-    String jabatan = tabel_gajiform.getValueAt(row, 4).toString();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Silakan pilih data yang ingin diedit!",
+                "Peringatan",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }   {
+            String nama = tabel_gajiform.getValueAt(row, 1).toString();
+            String nip = tabel_gajiform.getValueAt(row, 2).toString();
+            String pangkat = tabel_gajiform.getValueAt(row, 3).toString();
+            String jabatan = tabel_gajiform.getValueAt(row, 4).toString();
 
-    // ambil kolom bulan_kenaikan (format DATE dari database)
-    String tanggalStr = tabel_gajiform.getValueAt(row, 5).toString(); // contoh: "2025-12-01"
+            // Mengambil kolom bulan_kenaikan dari database dalam format DATE
+            String tanggalStr = tabel_gajiform.getValueAt(row, 5).toString();
 
-    // parsing ke LocalDate
-    LocalDate date = LocalDate.parse(tanggalStr); 
-    int bulan = date.getMonthValue(); // 1–12
-    int tahun = date.getYear();
+            LocalDate date = LocalDate.parse(tanggalStr); 
+            int bulan = date.getMonthValue(); // 1–12
+            int tahun = date.getYear();
 
-    // konversi angka bulan ke nama bulan
-    String bulanStr = "";
-    switch (bulan) {
-        case 1: bulanStr = "Januari"; break;
-        case 2: bulanStr = "Februari"; break;
-        case 3: bulanStr = "Maret"; break;
-        case 4: bulanStr = "April"; break;
-        case 5: bulanStr = "Mei"; break;
-        case 6: bulanStr = "Juni"; break;
-        case 7: bulanStr = "Juli"; break;
-        case 8: bulanStr = "Agustus"; break;
-        case 9: bulanStr = "September"; break;
-        case 10: bulanStr = "Oktober"; break;
-        case 11: bulanStr = "November"; break;
-        case 12: bulanStr = "Desember"; break;
-    }
+            // Mengubah nomor menjadi bulan
+            String bulanStr = "";
+            switch (bulan) {
+                case 1: bulanStr = "Januari"; break;
+                case 2: bulanStr = "Februari"; break;
+                case 3: bulanStr = "Maret"; break;
+                case 4: bulanStr = "April"; break;
+                case 5: bulanStr = "Mei"; break;
+                case 6: bulanStr = "Juni"; break;
+                case 7: bulanStr = "Juli"; break;
+                case 8: bulanStr = "Agustus"; break;
+                case 9: bulanStr = "September"; break;
+                case 10: bulanStr = "Oktober"; break;
+                case 11: bulanStr = "November"; break;
+                case 12: bulanStr = "Desember"; break;
+            }
 
-    // kirim ke form edit
-    formeditdata editForm = new formeditdata(nama, nip, pangkat, jabatan, bulanStr, String.valueOf(tahun));
-    editForm.setVisible(true);
-    tabel_gajiform.clearSelection();
+            // kirim ke form edit
+            formeditdata editForm = new formeditdata(nama, nip, pangkat, jabatan, bulanStr, String.valueOf(tahun));
+            editForm.setVisible(true);
+            tabel_gajiform.clearSelection();
 
-}
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
     java.sql.Connection conn = new koneksi().connect();
     int row = tabel_gajiform.getSelectedRow();
 
-if (row == -1) {
-    JOptionPane.showMessageDialog(
-        this,
-        "Pilih data yang ingin dihapus!",
-        "Peringatan",
-        JOptionPane.WARNING_MESSAGE
-    );
-    return;
-}
-    UIManager.put("OptionPane.messageFont", new Font("Segoe UI", Font.PLAIN, 14));
-    UIManager.put("OptionPane.buttonFont", new Font("Segoe UI", Font.BOLD, 13));
-
-    int ok = JOptionPane.showConfirmDialog(
-        this,
-        "Yakin ingin menghapus data pegawai?",
-        "Konfirmasi",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.WARNING_MESSAGE
-    );
-
-    if(ok==0){
-        try{
-            SQL="delete from pegawai where nip='"+tabel_gajiform.getValueAt(row, 2).toString()+"'";
-            java.sql.PreparedStatement stmt = conn.prepareStatement(SQL);
-            stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Data Berhasil di Hapus");
-            tampilData("");
-            tabel_gajiform.clearSelection();
-
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null,"Data Gagal Di Hapus");
-        }
+    if (row == -1) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Pilih data yang ingin dihapus!",
+            "Peringatan",
+            JOptionPane.WARNING_MESSAGE
+        );
+        return;
     }
+        UIManager.put("OptionPane.messageFont", new Font("Segoe UI", Font.PLAIN, 14));
+        UIManager.put("OptionPane.buttonFont", new Font("Segoe UI", Font.BOLD, 13));
+
+        int ok = JOptionPane.showConfirmDialog(
+            this,
+            "Yakin ingin menghapus data pegawai?",
+            "Konfirmasi",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if(ok==0){
+            try{
+                SQL="delete from pegawai where nip='"+tabel_gajiform.getValueAt(row, 2).toString()+"'";
+                java.sql.PreparedStatement stmt = conn.prepareStatement(SQL);
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(null,"Data Berhasil di Hapus");
+                tampilData("");
+                tabel_gajiform.clearSelection();
+
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null,"Data Gagal Di Hapus");
+            }
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       // Pindah halaman ke form tabel admin
         new tabeladmin.formtabeladmin().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed

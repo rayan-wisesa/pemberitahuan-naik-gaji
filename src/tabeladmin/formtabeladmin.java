@@ -28,7 +28,8 @@ public void tampilData(String keyword) {
     tabel_adminform.setModel(tabel_users);
 
     Connection conn = new koneksi().connect();
-
+    
+    // Mengambil data dari database menggunakan SQL, dimana akan menampilkan data dari table users yang memiliki role admin
 try {
     String sql = "SELECT username FROM users WHERE role = 'admin'";
     PreparedStatement pst = conn.prepareStatement(sql);

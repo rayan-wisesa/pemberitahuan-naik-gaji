@@ -23,9 +23,9 @@ public formeditdata() {
     initComponents();
     loadPangkatComboBox();
     
-    setSize(1300, 750);
-    setLocationRelativeTo(null);
-    setResizable(false);
+    setSize(1300, 750); // Mengatur ukuran aplikasi
+    setLocationRelativeTo(null); // Supaya aplikasi muncul di tengah layar
+    setResizable(false); // Supaya user tidak dapat meresize aplikasi
 
     int currentYear = java.time.Year.now().getValue();
     for (int i = currentYear; i <= currentYear + 10; i++) {
@@ -73,6 +73,7 @@ private Map<String, Integer> pangkatMap = new HashMap<>();
     
 
 private void loadPangkatComboBox() {
+    // Load isi dari tabel pangkat untuk ditampilkan di combobox
     try {
         Connection conn = new koneksi().connect();
         PreparedStatement stmt = conn.prepareStatement("SELECT id_pangkat, pangkat FROM pangkat ORDER BY pangkat");
@@ -300,7 +301,7 @@ private void loadPangkatComboBox() {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
+    // Mengambil data yang ada di form
     if (nama_pegawaifield.getText().trim().isEmpty()) {
     JOptionPane.showMessageDialog(this, "Nama tidak boleh kosong");
     return;
@@ -329,21 +330,22 @@ private void loadPangkatComboBox() {
         JOptionPane.showMessageDialog(null, "Silakan pilih pangkat terlebih dahulu!");
         return; // hentikan proses insert
     }
-
+    
+    // Mengonversi angka menjadi bulan
     int bulan = 0;
     switch (bulanStr) {
-    case "Januari": bulan = 1; break;
-    case "Februari": bulan = 2; break;
-    case "Maret": bulan = 3; break;
-    case "April": bulan = 4; break;
-    case "Mei": bulan= 5; break;
-    case "Juni": bulan = 6; break;
-    case "Juli": bulan = 7; break;
-    case "Agustus": bulan = 8; break;
-    case "September": bulan = 9; break;
-    case "Oktober": bulan = 10; break;
-    case "November": bulan = 11; break;
-    case "Desember": bulan = 12; break;
+        case "Januari": bulan = 1; break;
+        case "Februari": bulan = 2; break;
+        case "Maret": bulan = 3; break;
+        case "April": bulan = 4; break;
+        case "Mei": bulan= 5; break;
+        case "Juni": bulan = 6; break;
+        case "Juli": bulan = 7; break;
+        case "Agustus": bulan = 8; break;
+        case "September": bulan = 9; break;
+        case "Oktober": bulan = 10; break;
+        case "November": bulan = 11; break;
+        case "Desember": bulan = 12; break;
     }
     
     int tahun = Integer.parseInt(combotahun.getSelectedItem().toString());
@@ -356,7 +358,7 @@ private void loadPangkatComboBox() {
         java.sql.Connection conn = new koneksi().connect();
     try {
 
-    // 1. Update data pegawai (nama, jabatan)
+    // Mengupdate data pegawai
     PreparedStatement stmtPegawai = conn.prepareStatement(
         "UPDATE pegawai SET nama=?, jabatan=? WHERE nip=?"
     );
