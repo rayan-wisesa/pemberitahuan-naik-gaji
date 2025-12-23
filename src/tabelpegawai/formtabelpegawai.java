@@ -19,8 +19,8 @@ public class formtabelpegawai extends javax.swing.JFrame {
     private DefaultTableModel tabel_gaji;
     private String SQL;
     
-     public void tampilData(String keyword) {
-         
+    public void tampilData(String keyword) {
+    // Membuat tabel
     tabel_gaji = new DefaultTableModel();
     tabel_gaji.addColumn("No");
     tabel_gaji.addColumn("Nama");
@@ -30,27 +30,27 @@ public class formtabelpegawai extends javax.swing.JFrame {
     tabel_gaji.addColumn("Bulan Kenaikan");
     tabel_gajiform.setModel(tabel_gaji);
     
+    // Fitur sorter pada tabel
     TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tabel_gaji);
     tabel_gajiform.setRowSorter(sorter);
 
-    java.sql.Connection conn = new koneksi().connect();
+    java.sql.Connection conn = new koneksi().connect(); // Menyambungkan ke database
     try{
         String sql;
         PreparedStatement stmt;
-        if (keyword.isEmpty()) {
+        if (keyword.isEmpty()) {    // Query SQL jika kolom pencarian kosong
                 sql = "SELECT pegawai.nama, pegawai.nip, pangkat.pangkat, pegawai.jabatan, gaji.kenaikan AS bulan_kenaikan " +
                   "FROM gaji " +
                   "JOIN pegawai ON gaji.nip_pegawai = pegawai.nip " +
                   "JOIN pangkat ON gaji.id_pangkat = pangkat.id_pangkat";
 
                 stmt = conn.prepareStatement(sql);
-            } else {
+            } else {    // Query SQL jika kolom pencarian terdapat isi
                 sql = "SELECT pegawai.nama, pegawai.nip, pangkat.pangkat, pegawai.jabatan, gaji.kenaikan AS bulan_kenaikan " +
                   "FROM gaji " +
                   "JOIN pegawai ON gaji.nip_pegawai = pegawai.nip " +
                   "JOIN pangkat ON gaji.id_pangkat = pangkat.id_pangkat " +
                   "WHERE pegawai.nama LIKE ?";
-
 ;
                 stmt = conn.prepareStatement(sql);
                 stmt.setString(1, "%" + keyword + "%");
@@ -58,22 +58,22 @@ public class formtabelpegawai extends javax.swing.JFrame {
 
             ResultSet res = stmt.executeQuery();
             int no = 1;
-            while (res.next()) {
-    tabel_gaji.addRow(new Object[]{
-        no++,
-        res.getString("nama"),
-        res.getString("nip"),
-        res.getString("pangkat"),
-        res.getString("jabatan"),
-        res.getString("bulan_kenaikan")
-    });
-}
-konfigurasiKolom();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage());
-        }
-     }
+            while (res.next()) { //Perulangan untuk menampilkan seluruh data pegawai dari database
+                tabel_gaji.addRow(new Object[]{
+                    no++,
+                    res.getString("nama"),
+                    res.getString("nip"),
+                    res.getString("pangkat"),
+                    res.getString("jabatan"),
+                    res.getString("bulan_kenaikan")
+                });
+            }
+            konfigurasiKolom();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage());
+                    }
+                 }
 
     public formtabelpegawai() {
     initComponents();
