@@ -571,12 +571,16 @@ private void aktifkanWrapText() {
     }//GEN-LAST:event_jButton2ActionPerformed
     
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    // Menghapus data
     java.sql.Connection conn = new koneksi().connect();
+    
+    // Mengambil data dari row tabel yang dipilih
     int row = tabel_gajiform.getSelectedRow();
-
+    
     if (row == -1) {
         JOptionPane.showMessageDialog(
             this,
+            // Output jika tidak ada row yang dipilih
             "Pilih data yang ingin dihapus!",
             "Peringatan",
             JOptionPane.WARNING_MESSAGE
@@ -588,13 +592,16 @@ private void aktifkanWrapText() {
 
         int ok = JOptionPane.showConfirmDialog(
             this,
+            // Output jika row telah dipilih
             "Yakin ingin menghapus data pegawai?",
             "Konfirmasi",
+            // Konfirmasi
             JOptionPane.YES_NO_OPTION,
             JOptionPane.WARNING_MESSAGE
         );
-
+        
         if(ok==0){
+            // Jika pengguna memilih OK, maka data akan dihapus
             try{
                 SQL="delete from pegawai where nip='"+tabel_gajiform.getValueAt(row, 2).toString()+"'";
                 java.sql.PreparedStatement stmt = conn.prepareStatement(SQL);

@@ -338,7 +338,7 @@ private void loadPangkatComboBox() {
         return; // hentikan proses insert
     }
     
-    // Mengonversi angka menjadi bulan
+    // Merubah angka menjadi bulan
     int bulan = 0;
     switch (bulanStr) {
         case "Januari": bulan = 1; break;
@@ -382,7 +382,7 @@ private void loadPangkatComboBox() {
     stmtGaji.setString(3, nip_field.getText());
     stmtGaji.executeUpdate();
 
-    // 4. Pesan sukses dan buka tabel pegawai
+    // Menampilkan pesan dan memindahkan halaman ke tabel pegawai
     JOptionPane.showMessageDialog(this, "Data Berhasil diupdate", "Pesan", JOptionPane.INFORMATION_MESSAGE);
     new formtabelpegawai().setVisible(true);
     dispose();

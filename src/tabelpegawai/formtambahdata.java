@@ -15,107 +15,107 @@ import java.sql.ResultSet;
 import java.util.Map;
 import java.util.HashMap;
 
-public class formtambahdata extends javax.swing.JFrame {
+    public class formtambahdata extends javax.swing.JFrame {
 
-    private String SQL;
-    
-    public formtambahdata() {
-        initComponents();
-        loadPangkatComboBox();
-    
-    // Placeholder
-    nama_pegawaifield.putClientProperty(
-    "JTextField.placeholderText", "Masukkan nama pegawai"
-);
+        private String SQL;
 
-    nip_field.putClientProperty(
-    "JTextField.placeholderText", "Masukkan NIP pegawai"
-);
+        public formtambahdata() {
+            initComponents();
+            loadPangkatComboBox();
 
-    jabatan_field.putClientProperty(
-    "JTextField.placeholderText", "Masukkan jabatan"
-);
-    
-    nama_pegawaifield.putClientProperty("FlatLaf.style", "arc:14");
-    nip_field.putClientProperty("FlatLaf.style", "arc:14");
-    jabatan_field.putClientProperty("FlatLaf.style", "arc:14");
-
-    comboboxpangkat.putClientProperty("FlatLaf.style", "arc:14");
-    combobulan.putClientProperty("FlatLaf.style", "arc:14");
-    combotahun.putClientProperty("FlatLaf.style", "arc:14");
-
-    styleButton(jButton1, new java.awt.Color(34,197,94));
-    styleButton(jButton3, new java.awt.Color(239,68,68));
-
-
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-    public void componentResized(ComponentEvent e) {
-        int frameWidth = getWidth();
-        int frameHeight = getHeight();
-
-        // Hitung ulang posisi komponen seperti di atas
-        // (copy ulang logika setBounds di sini)
-    }
-});
-        
-        jLabel1.setBounds(0, 0, getWidth(), getHeight());
-        
-        String pathLogo = "/images/Lambang_Kota_Tanjungpinang.png";
-        int lebarLogo = 100; 
-        int tinggiLogo = 120; 
-        
-        tampilkanGambar(Logo_Tanjungpinang, pathLogo, lebarLogo, tinggiLogo);
-        this.setSize(1300, 750);   // Mengatur ukuran aplikasi
-        this.setLocationRelativeTo(null); // Supaya aplikasi muncul di tengah layar
-        this.setResizable(false); // Supaya user tidak dapat meresize aplikasi
-    
-    int currentYear = java.time.Year.now().getValue();
-    for (int i = currentYear; i <= currentYear + 10; i++) {
-        combotahun.addItem(String.valueOf(i));
-    }
-
-    }
-    
-private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
-    btn.setBackground(bg);
-    btn.setForeground(java.awt.Color.WHITE);
-    btn.setFocusPainted(false);
-    btn.setBorderPainted(false);
-    btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-    btn.putClientProperty(
-        "FlatLaf.style",
-        "arc:18; font:bold"
+        // Placeholder
+        nama_pegawaifield.putClientProperty(
+        "JTextField.placeholderText", "Masukkan nama pegawai"
     );
-}
 
-private Map<String, Integer> pangkatMap = new HashMap<>();
-    
+        nip_field.putClientProperty(
+        "JTextField.placeholderText", "Masukkan NIP pegawai"
+    );
 
-private void loadPangkatComboBox() {
-    // Load isi dari tabel pangkat untuk ditampilkan di combobox
-    try {
-        Connection conn = new koneksi().connect();
-        PreparedStatement stmt = conn.prepareStatement("SELECT id_pangkat, pangkat FROM pangkat ORDER BY pangkat");
-        ResultSet rs = stmt.executeQuery();
+        jabatan_field.putClientProperty(
+        "JTextField.placeholderText", "Masukkan jabatan"
+    );
 
-        comboboxpangkat.removeAllItems();
-        comboboxpangkat.addItem("--Pilih Pangkat--");
+        nama_pegawaifield.putClientProperty("FlatLaf.style", "arc:14");
+        nip_field.putClientProperty("FlatLaf.style", "arc:14");
+        jabatan_field.putClientProperty("FlatLaf.style", "arc:14");
 
-        pangkatMap.clear(); // kosongkan map
+        comboboxpangkat.putClientProperty("FlatLaf.style", "arc:14");
+        combobulan.putClientProperty("FlatLaf.style", "arc:14");
+        combotahun.putClientProperty("FlatLaf.style", "arc:14");
 
-        while (rs.next()) {
-            int idPangkat = rs.getInt("id_pangkat");
-            String namaPangkat = rs.getString("pangkat");
+        styleButton(jButton1, new java.awt.Color(34,197,94));
+        styleButton(jButton3, new java.awt.Color(239,68,68));
 
-            comboboxpangkat.addItem(namaPangkat);   // tampilkan hanya nama
-            pangkatMap.put(namaPangkat, idPangkat); // simpan mapping nama ke id
+
+            this.addComponentListener(new ComponentAdapter() {
+                @Override
+        public void componentResized(ComponentEvent e) {
+            int frameWidth = getWidth();
+            int frameHeight = getHeight();
+
+            // Hitung ulang posisi komponen seperti di atas
+            // (copy ulang logika setBounds di sini)
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Gagal load data pangkat: " + ex.getMessage());
+    });
+
+            jLabel1.setBounds(0, 0, getWidth(), getHeight());
+
+            String pathLogo = "/images/Lambang_Kota_Tanjungpinang.png";
+            int lebarLogo = 100; 
+            int tinggiLogo = 120; 
+
+            tampilkanGambar(Logo_Tanjungpinang, pathLogo, lebarLogo, tinggiLogo);
+            this.setSize(1300, 750);   // Mengatur ukuran aplikasi
+            this.setLocationRelativeTo(null); // Supaya aplikasi muncul di tengah layar
+            this.setResizable(false); // Supaya user tidak dapat meresize aplikasi
+
+        int currentYear = java.time.Year.now().getValue();
+        for (int i = currentYear; i <= currentYear + 10; i++) {
+            combotahun.addItem(String.valueOf(i));
+        }
+
+        }
+    
+    private void styleButton(javax.swing.JButton btn, java.awt.Color bg) {
+        btn.setBackground(bg);
+        btn.setForeground(java.awt.Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setBorderPainted(false);
+        btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        btn.putClientProperty(
+            "FlatLaf.style",
+            "arc:18; font:bold"
+        );
     }
-}
+
+    private Map<String, Integer> pangkatMap = new HashMap<>();
+
+
+    private void loadPangkatComboBox() {
+        // Load isi dari tabel pangkat untuk ditampilkan di combobox
+        try {
+            Connection conn = new koneksi().connect();
+            PreparedStatement stmt = conn.prepareStatement("SELECT id_pangkat, pangkat FROM pangkat ORDER BY pangkat");
+            ResultSet rs = stmt.executeQuery();
+
+            comboboxpangkat.removeAllItems();
+            comboboxpangkat.addItem("--Pilih Pangkat--");
+
+            pangkatMap.clear(); // kosongkan map
+
+            while (rs.next()) {
+                int idPangkat = rs.getInt("id_pangkat");
+                String namaPangkat = rs.getString("pangkat");
+
+                comboboxpangkat.addItem(namaPangkat);   // tampilkan hanya nama
+                pangkatMap.put(namaPangkat, idPangkat); // simpan mapping nama ke id
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Gagal load data pangkat: " + ex.getMessage());
+        }
+    }
 
     private void tampilkanGambar(JLabel label, String pathGambar, int lebar, int tinggi) {
         // Menampilkan gambar logo
@@ -330,108 +330,114 @@ private void loadPangkatComboBox() {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                                       
-
-int tanggal = 1;
-String bulanStr = combobulan.getSelectedItem().toString();
-    
-    if (bulanStr.equals("--Pilih Bulan--")) {
-        JOptionPane.showMessageDialog(null, "Silakan pilih bulan terlebih dahulu!");
-        return; // Menghentikan proses insert
-    }
-
-    String pangkatStr = comboboxpangkat.getSelectedItem().toString();
-if (pangkatStr.equals("--Pilih Pangkat--")) {
-    JOptionPane.showMessageDialog(this, "Silakan pilih pangkat terlebih dahulu!");
-    return;
-}
-
-if (nama_pegawaifield.getText().trim().isEmpty()) {
-    JOptionPane.showMessageDialog(this, "Nama pegawai wajib diisi!");
-    nama_pegawaifield.requestFocus();
-    return;
-}
-
-if (nip_field.getText().trim().isEmpty()) {
-    JOptionPane.showMessageDialog(this, "NIP wajib diisi!");
-    nip_field.requestFocus();
-    return;
-}
-
-if (jabatan_field.getText().trim().isEmpty()) {
-    JOptionPane.showMessageDialog(this, "Jabatan wajib diisi!");
-    jabatan_field.requestFocus();
-    return;
-}
-
-if (!nip_field.getText().matches("\\d+")) {
-    JOptionPane.showMessageDialog(this, "NIP harus berupa angka!");
-    nip_field.requestFocus();
-    return;
-}
-
-int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
-
-    int bulan = 0;
-    switch (bulanStr) {
-        case "Januari": bulan = 1; break;
-        case "Februari": bulan = 2; break;
-        case "Maret": bulan = 3; break;
-        case "April": bulan = 4; break;
-        case "Mei": bulan = 5; break;
-        case "Juni": bulan = 6; break;
-        case "Juli": bulan = 7; break;
-        case "Agustus": bulan = 8; break;
-        case "September": bulan = 9; break;
-        case "Oktober": bulan = 10; break;
-        case "November": bulan = 11; break;
-        case "Desember": bulan = 12; break;
-    }
-
-    int tahun = Integer.parseInt(combotahun.getSelectedItem().toString());
-
-    // gabungkan jadi LocalDate
-    LocalDate date = LocalDate.of(tahun, bulan, tanggal);
-
-    try {
-        Connection conn = new koneksi().connect();
-
-        // Menyimpan pegawai jika belum ada
-        PreparedStatement checkPegawai = conn.prepareStatement(
-            "SELECT nip FROM pegawai WHERE nip = ?"
-        );
-        checkPegawai.setString(1, nip_field.getText());
-        ResultSet rs = checkPegawai.executeQuery();
-
-        if (!rs.next()) { // Insert jika belum ada
-            PreparedStatement stmtPegawai = conn.prepareStatement(
-                "INSERT INTO pegawai (nip, nama, jabatan) VALUES (?, ?, ?)"
-            );
-            stmtPegawai.setString(1, nip_field.getText());
-            stmtPegawai.setString(2, nama_pegawaifield.getText());
-            stmtPegawai.setString(3, jabatan_field.getText());
-            stmtPegawai.executeUpdate();
+        // Tambah data                 
+        int tanggal = 1;
+   
+        // Validasi input untuk combobox bulan
+        String bulanStr = combobulan.getSelectedItem().toString();
+        if (bulanStr.equals("--Pilih Bulan--")) {
+            JOptionPane.showMessageDialog(null, "Silakan pilih bulan terlebih dahulu!");
+            return; // Menghentikan proses insert
+        }
+        
+        // Validasi input untuk combobox pangkat
+        String pangkatStr = comboboxpangkat.getSelectedItem().toString();
+        if (pangkatStr.equals("--Pilih Pangkat--")) {
+            JOptionPane.showMessageDialog(this, "Silakan pilih pangkat terlebih dahulu!");
+            return;
+        }
+        
+        // Validasi untuk field nama pegawai
+        if (nama_pegawaifield.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama pegawai wajib diisi!");
+            nama_pegawaifield.requestFocus();
+            return;
+        }
+        
+        // Validasi untuk field NIP
+        if (nip_field.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "NIP wajib diisi!");
+            nip_field.requestFocus();
+            return;
+        }
+        
+        // Validasi untuk field Jabatan
+        if (jabatan_field.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Jabatan wajib diisi!");
+            jabatan_field.requestFocus();
+            return;
+        }
+        
+        // Validasi untuk field NIP, akan muncul jika input adalah selain angka
+        if (!nip_field.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "NIP harus berupa angka!");
+            nip_field.requestFocus();
+            return;
         }
 
-        // Menyimpan data kedalam tabel gaji
-        PreparedStatement stmtGaji = conn.prepareStatement(
-            "INSERT INTO gaji (nip_pegawai, id_pangkat, kenaikan) VALUES (?, ?, ?)"
-        );
-        stmtGaji.setString(1, nip_field.getText());
-        stmtGaji.setInt(2, idPangkat);
-        stmtGaji.setDate(3, java.sql.Date.valueOf(date));
-        stmtGaji.executeUpdate();
+        int idPangkat = pangkatMap.get(pangkatStr); // ambil id dari map
+        
+        int bulan = 0;
+        switch (bulanStr) {
+            case "Januari": bulan = 1; break;
+            case "Februari": bulan = 2; break;
+            case "Maret": bulan = 3; break;
+            case "April": bulan = 4; break;
+            case "Mei": bulan = 5; break;
+            case "Juni": bulan = 6; break;
+            case "Juli": bulan = 7; break;
+            case "Agustus": bulan = 8; break;
+            case "September": bulan = 9; break;
+            case "Oktober": bulan = 10; break;
+            case "November": bulan = 11; break;
+            case "Desember": bulan = 12; break;
+        }
+        
+        // Mengubah angka menjadi nama bulan
+        int tahun = Integer.parseInt(combotahun.getSelectedItem().toString());
 
-        JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+        // Menggabungkan data input jadi LocalDate
+        LocalDate date = LocalDate.of(tahun, bulan, tanggal);
 
-        new formtabelpegawai().setVisible(true);
-        dispose();
+        try {
+            Connection conn = new koneksi().connect();
 
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Data Gagal Disimpan: " + ex.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Terjadi error: " + e.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
-    }
+            // Menyimpan pegawai jika belum ada
+            PreparedStatement checkPegawai = conn.prepareStatement(
+                "SELECT nip FROM pegawai WHERE nip = ?"
+            );
+            checkPegawai.setString(1, nip_field.getText());
+            ResultSet rs = checkPegawai.executeQuery();
+
+            if (!rs.next()) { // Insert jika belum ada
+                PreparedStatement stmtPegawai = conn.prepareStatement(
+                    "INSERT INTO pegawai (nip, nama, jabatan) VALUES (?, ?, ?)"
+                );
+                stmtPegawai.setString(1, nip_field.getText());
+                stmtPegawai.setString(2, nama_pegawaifield.getText());
+                stmtPegawai.setString(3, jabatan_field.getText());
+                stmtPegawai.executeUpdate();
+            }
+
+            // Menyimpan data kedalam tabel gaji
+            PreparedStatement stmtGaji = conn.prepareStatement(
+                "INSERT INTO gaji (nip_pegawai, id_pangkat, kenaikan) VALUES (?, ?, ?)"
+            );
+            stmtGaji.setString(1, nip_field.getText());
+            stmtGaji.setInt(2, idPangkat);
+            stmtGaji.setDate(3, java.sql.Date.valueOf(date));
+            stmtGaji.executeUpdate();
+
+            JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+
+            new formtabelpegawai().setVisible(true);
+            dispose();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Data Gagal Disimpan: " + ex.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Terjadi error: " + e.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void combotahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combotahunActionPerformed
