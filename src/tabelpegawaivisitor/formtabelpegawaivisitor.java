@@ -27,8 +27,6 @@ public class formtabelpegawaivisitor extends javax.swing.JFrame {
     tabel_gaji.addColumn("Jabatan");
     tabel_gaji.addColumn("Bulan Kenaikan");
     tabel_gajiform.setModel(tabel_gaji);
-    tabel_gajiform.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-
     
     TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tabel_gaji);
     tabel_gajiform.setRowSorter(sorter);
@@ -78,6 +76,8 @@ public class formtabelpegawaivisitor extends javax.swing.JFrame {
 public formtabelpegawaivisitor() {
     initComponents();
     
+    tabel_gajiform.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    
     jScrollPane1.setHorizontalScrollBarPolicy(
     JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
 );
@@ -100,17 +100,31 @@ public formtabelpegawaivisitor() {
     konfigurasiTabel();     // styling + behavior tabel
     konfigurasiPencarian(); // search
     nonEditableTable();     // read-only
-    konfigurasiKolom();
-    tampilData("");
 
+    tampilData("");
+    konfigurasiKolom();
 }
 
 private void konfigurasiKolom() {
-    tabel_gajiform.getColumnModel().getColumn(0).setPreferredWidth(40);
+
+    // Kolom No
+    tabel_gajiform.getColumnModel().getColumn(0).setMinWidth(50);
+    tabel_gajiform.getColumnModel().getColumn(0).setMaxWidth(60);
+    tabel_gajiform.getColumnModel().getColumn(0).setPreferredWidth(55);
+
+    // Kolom Nama
     tabel_gajiform.getColumnModel().getColumn(1).setPreferredWidth(220);
-    tabel_gajiform.getColumnModel().getColumn(2).setPreferredWidth(180);
+
+    // Kolom NIP (dipanjangkan)
+    tabel_gajiform.getColumnModel().getColumn(2).setPreferredWidth(200);
+
+    // Kolom Pangkat
     tabel_gajiform.getColumnModel().getColumn(3).setPreferredWidth(300);
+
+    // Kolom Jabatan
     tabel_gajiform.getColumnModel().getColumn(4).setPreferredWidth(200);
+
+    // Kolom Bulan Kenaikan
     tabel_gajiform.getColumnModel().getColumn(5).setPreferredWidth(160);
 }
 
@@ -384,7 +398,7 @@ private void styleButton(JButton btn, Color color) {
     }//GEN-LAST:event_fieldcariActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        tampilData("");
+
     }//GEN-LAST:event_formWindowOpened
 
 
@@ -402,7 +416,6 @@ private void styleButton(JButton btn, Color color) {
         new formtabelpegawaivisitor().setVisible(true);
     });
 }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Logo_Tanjungpinang;
