@@ -510,6 +510,7 @@ private void aktifkanWrapText() {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new formtambahdata().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
